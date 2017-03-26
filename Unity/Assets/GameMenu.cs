@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Overmind.Solitaire.Unity
@@ -36,7 +37,7 @@ namespace Overmind.Solitaire.Unity
 		public void StartNewGame()
 		{
 			Application.GameSeed = seed;
-			UnityEngine.Application.LoadLevel("GameScene");
+			SceneManager.LoadScene("GameScene");
 		}
 
 		public void SetRandomSeed()

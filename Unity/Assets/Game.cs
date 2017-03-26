@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Overmind.Solitaire.Unity
 {
@@ -137,7 +138,7 @@ namespace Overmind.Solitaire.Unity
 		private void Exit()
 		{
 			Debug.Log("[Game] Exit");
-			UnityEngine.Application.LoadLevel("MenuScene");
+			SceneManager.LoadScene("MenuScene");
 		}
 	}
 }

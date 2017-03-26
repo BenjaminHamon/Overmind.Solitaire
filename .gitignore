@@ -2,8 +2,6 @@
 .vs/
 
 # Unity
-Unity/Assets/UnityVS/
-Unity/Assets/UnityVS.meta
 Unity/Library/
 Unity/Temp/
 Unity/*.csproj
