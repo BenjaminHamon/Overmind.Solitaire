@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Overmind.Solitaire.Unity
+namespace Overmind.Solitaire.UnityClient
 {
 	/// <summary>The foundations are the piles where the player must stack cards as same type sequences to achieve victory.</summary>
 	public class FoundationCardPile : CardPile

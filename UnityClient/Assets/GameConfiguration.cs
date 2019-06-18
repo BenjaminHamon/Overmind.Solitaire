@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Overmind.Solitaire.Unity
+namespace Overmind.Solitaire.UnityClient
 {
 	[Serializable]
 	public class GameConfiguration

@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Overmind.Solitaire.Unity
+namespace Overmind.Solitaire.UnityClient
 {
 	public class CardPile : MonoBehaviour
 	{

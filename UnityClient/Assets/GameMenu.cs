@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Overmind.Solitaire.Unity
+namespace Overmind.Solitaire.UnityClient
 {
 	public class GameMenu : MonoBehaviour
 	{

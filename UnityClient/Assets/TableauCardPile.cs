@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Overmind.Solitaire.Unity
+namespace Overmind.Solitaire.UnityClient
 {
 	/// <summary>The tableau is the main area, where the player can place cards as sequences of alternating color and reveal hidden cards.</summary>
 	public class TableauCardPile : CardPile

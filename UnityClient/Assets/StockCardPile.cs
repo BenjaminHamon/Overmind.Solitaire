@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Overmind.Solitaire.Unity
+namespace Overmind.Solitaire.UnityClient
 {
 	/// <summary>The stock is the pile with the leftover cards from the setup, from which the player can draw.</summary>
 	public class StockCardPile : CardPile
