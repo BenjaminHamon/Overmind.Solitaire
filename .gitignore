@@ -1,5 +1,14 @@
+# Environment
+environment.json
+
 # Log files
 *.log
+
+# Python
+__pycache__/
+
+# Python virtual environment
+.venv/
 
 # Unity
 /UnityClient/Library/
