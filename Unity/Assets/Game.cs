@@ -32,7 +32,7 @@ namespace Overmind.Solitaire.Unity
 
 		private System.Random random;
 		private List<FoundationCardPile> foundationCardPiles = new List<FoundationCardPile>();
-		public IEnumerable<FoundationCardPile> FoundationCardPiles {  get { return foundationCardPiles; } }
+		public IEnumerable<FoundationCardPile> FoundationCardPiles { get { return foundationCardPiles; } }
 
 		public void Start()
 		{

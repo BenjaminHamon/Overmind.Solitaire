@@ -63,7 +63,7 @@ namespace Overmind.Solitaire.Unity
 				renderer.sprite = visible ? frontSprite : backSprite;
 			}
 		}
-		
+
 		private Transform draggingHandler;
 		private Vector3 draggingStartingPoint;
 		private Vector3 draggingOffset;
@@ -110,10 +110,13 @@ namespace Overmind.Solitaire.Unity
 		public void OnMouseUp()
 		{
 			if (Time.time - lastClick > 0.5f)
+			{
 				lastClick = Time.time;
+			}
 			else
 			{
 				// Debug.Log("DoubleClick");
+
 				if ((Parent is FoundationCardPile) == false)
 				{
 					foreach (FoundationCardPile foundationCardPile in Game.FoundationCardPiles)
@@ -122,6 +125,7 @@ namespace Overmind.Solitaire.Unity
 							break;
 					}
 				}
+
 				lastClick = 0;
 			}
 

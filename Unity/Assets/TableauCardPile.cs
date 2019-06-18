@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace Overmind.Solitaire.Unity
 {
+	/// <summary>The tableau is the main area, where the player can place cards as sequences of alternating color and reveal hidden cards.</summary>
 	public class TableauCardPile : CardPile
 	{
 		public int CardMaxNumber;
@@ -10,12 +11,15 @@ namespace Overmind.Solitaire.Unity
 		public override bool TryPush(Card card)
 		{
 			Card topCard = Cards.FirstOrDefault();
-			if (((topCard == null) && (card.Number == CardMaxNumber))
-				|| ((topCard != null) && topCard.Visible && AreTypeCompatible(topCard.Type, card.Type) && (topCard.Number == card.Number + 1)))
+			bool canPushAsFirstCard = (topCard == null) && (card.Number == CardMaxNumber);
+			bool canPushAsNextCard = (topCard != null) && topCard.Visible && (topCard.Type.ToColor() != card.Type.ToColor()) && (topCard.Number == card.Number + 1);
+
+			if (canPushAsFirstCard || canPushAsNextCard)
 			{
 				Push(card);
 				return true;
 			}
+
 			return false;
 		}
 
@@ -27,21 +31,6 @@ namespace Overmind.Solitaire.Unity
 		public IEnumerable<Card> GetChildren(Card baseCard)
 		{
 			return Cards.TakeWhile(card => card != baseCard).Reverse();
-		}
-
-		private bool AreTypeCompatible(CardType first, CardType second)
-		{
-			switch (first)
-			{
-				case CardType.Clubs:
-				case CardType.Spades:
-					return (second == CardType.Diamonds) || (second == CardType.Hearts);
-				case CardType.Diamonds:
-				case CardType.Hearts:
-					return (second == CardType.Clubs) || (second == CardType.Spades);
-				default:
-					return false;
-			}
 		}
 	}
 }

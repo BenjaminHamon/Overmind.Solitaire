@@ -51,7 +51,7 @@ namespace Overmind.Unity.Editor
 					newValue = EditorGUILayout.ObjectField(name, (UnityEngine.Object)oldValue, property.PropertyType, EditorUtility.IsPersistent(target) == false);
 				else
 					throw new Exception("[MonoBehaviourEditor.OnInspectorGUI] Unhandled type " + property.PropertyType + " for property " + property.Name);
-				
+
 				try { property.SetValue(target, newValue, null); }
 				catch (Exception exception) { UnityEngine.Debug.LogError(exception, target); }
 				EditorUtility.SetDirty(target);

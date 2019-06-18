@@ -16,8 +16,11 @@ namespace Overmind.Solitaire.Unity
 		public void Push(Card card)
 		{
 			// Debug.Log("[CardPile] Push " + card + " to " + this, this);
+
 			if (card.Parent == null)
+			{
 				DoPush(card);
+			}
 			else
 			{
 				IEnumerable<Card> poppedCardList = card.Parent.Pop(card);
@@ -57,6 +60,7 @@ namespace Overmind.Solitaire.Unity
 		public void ResetDepth()
 		{
 			float z = -0.1f * Cards.Count;
+
 			foreach (Card card in Cards)
 			{
 				Vector3 cardPosition = card.transform.localPosition;

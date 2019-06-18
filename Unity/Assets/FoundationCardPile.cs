@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace Overmind.Solitaire.Unity
 {
+	/// <summary>The foundations are the piles where the player must stack cards as same type sequences to achieve victory.</summary>
 	public class FoundationCardPile : CardPile
 	{
 		public int CardMaxNumber;
@@ -24,25 +25,24 @@ namespace Overmind.Solitaire.Unity
 				return false;
 
 			Card topCard = Cards.FirstOrDefault();
+			bool canPushAsFirstCard = (topCard == null) && (card.Number == 1);
+			bool canPushAsNextCard = (topCard != null) && (topCard.Type == card.Type) && (topCard.Number == card.Number - 1);
 
-			if (((topCard == null) && (card.Number == 1))
-				|| ((topCard != null) && (topCard.Type == card.Type) && (topCard.Number == card.Number - 1)))
+			if (canPushAsFirstCard || canPushAsNextCard)
 			{
 				Push(card);
 				return true;
 			}
+
 			return false;
 		}
 
 		protected override void DoPush(Card card)
 		{
 			base.DoPush(card);
+
 			if (IsComplete)
-			{
-				Action completedHandler = Completed;
-				if (completedHandler != null)
-					completedHandler();
-			}
+				Completed?.Invoke();
 		}
 	}
 }
