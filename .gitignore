@@ -2,11 +2,11 @@
 *.log
 
 # Unity
-/Unity/Library/
-/Unity/Logs/
-/Unity/Temp/
-/Unity/*.csproj
-/Unity/*.sln
+/UnityClient/Library/
+/UnityClient/Logs/
+/UnityClient/Temp/
+/UnityClient/*.csproj
+/UnityClient/*.sln
 
 # Visual Studio
 .vs/
