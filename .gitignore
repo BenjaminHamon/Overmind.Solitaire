@@ -1,8 +1,15 @@
+# Log files
+*.log
+
+# Unity
+/Unity/Library/
+/Unity/Logs/
+/Unity/Temp/
+/Unity/*.csproj
+/Unity/*.sln
+
 # Visual Studio
 .vs/
 
-# Unity
-Unity/Library/
-Unity/Temp/
-Unity/*.csproj
-Unity/*.sln
+# Visual Studio Code
+.vscode/
