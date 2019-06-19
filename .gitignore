@@ -1,3 +1,6 @@
+# Build artifacts
+.artifacts/
+
 # Environment
 environment.json
 

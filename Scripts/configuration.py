@@ -3,12 +3,14 @@ import subprocess
 
 import commands.clean
 import commands.editor
+import commands.package
 
 
 def get_command_list():
 	return [
 		commands.clean,
 		commands.editor,
+		commands.package,
 	]
 
 
@@ -37,5 +39,14 @@ def load_configuration(environment):
 	configuration["copyright"] = "Copyright (c) 2019 Benjamin Hamon"
 
 	configuration["unity_project_path"] = "UnityClient"
+	configuration["package_platforms"] = [ "Android", "Linux", "Windows" ]
+	configuration["package_configurations"] = [ "Debug", "Release" ]
+
+	configuration["artifacts"] = {
+		"package": {
+			"file_name": "{project}_{version}_Package_{platform}_{configuration}",
+			"path_in_repository": "packages",
+		},
+	}
 
 	return configuration
