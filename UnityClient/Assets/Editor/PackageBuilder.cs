@@ -63,7 +63,7 @@ namespace Overmind.Solitaire.UnityClient.Editor
 		{
 			switch (platform)
 			{
-				case BuildTarget.Android: return path + ".apk";
+				case BuildTarget.Android: return Path.Combine(path, application + ".apk");
 				case BuildTarget.StandaloneLinux64: return Path.Combine(path, application);
 				case BuildTarget.StandaloneWindows64: return Path.Combine(path, application + ".exe");
 				default: throw new ArgumentException(String.Format("Unsupported platform: '{0}'", platform));

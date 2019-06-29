@@ -17,6 +17,7 @@ def clean(unity_project_path, simulate):
 	print("")
 
 	directories_to_clean = [
+		{ "display_name": "Build", "path": ".build" },
 		{ "display_name": "Build artifacts", "path": ".artifacts" },
 		{ "display_name": "Unity cache", "path": os.path.join(unity_project_path, "Library") },
 		{ "display_name": "Unity logs", "path": os.path.join(unity_project_path, "Logs") },

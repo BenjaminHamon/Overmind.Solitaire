@@ -27,8 +27,8 @@ def parse_arguments(environment_instance, configuration_instance):
 	main_parser = argparse.ArgumentParser()
 	main_parser.add_argument("--verbosity", choices = all_log_levels, default = "info",
 		metavar = "<level>", help = "set the logging level (%s)" % ", ".join(all_log_levels))
-	main_parser.add_argument("--simulate", action = "store_true", help = "make a simulated run, without actually executing commands")
-	main_parser.add_argument("--results", help = "set the file path where to store the build results")
+	main_parser.add_argument("--simulate", action = "store_true", help = "perform a simulated run")
+	main_parser.add_argument("--results", metavar = "<path>", help = "set the file path where to store execution results")
 
 	subparsers = main_parser.add_subparsers(title = "commands", metavar = "<command>")
 	subparsers.required = True

@@ -14,21 +14,11 @@ def configure_argument_parser(environment, configuration, subparsers): # pylint:
 
 
 def run(environment, configuration, arguments): # pylint: disable = unused-argument
-	parameters = {
-		"project": configuration["project"],
-		"version": configuration["project_version"]["full"],
-		"platform": arguments.platform,
-		"configuration": arguments.configuration,
-	}
-
-	artifact = configuration["artifacts"]["package"]
-	artifact_name = artifact["file_name"].format(**parameters)
-	local_artifact_path = os.path.join(".artifacts", artifact["path_in_repository"], artifact_name)
-
 	unity_executable = environment["unity_2019_executable"]
 	unity_project_path = configuration["unity_project_path"]
+	package_path = os.path.join(".build", "packages", arguments.platform, arguments.configuration)
 
-	package(unity_executable, unity_project_path, arguments.platform, arguments.configuration, local_artifact_path, arguments.simulate)
+	package(unity_executable, unity_project_path, arguments.platform, arguments.configuration, package_path, arguments.simulate)
 
 
 def package(unity_executable, unity_project_path, platform, configuration, destination, simulate): # pylint: disable = too-many-arguments

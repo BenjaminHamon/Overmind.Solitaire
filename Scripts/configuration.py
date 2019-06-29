@@ -1,6 +1,7 @@
 import datetime
 import subprocess
 
+import commands.artifact
 import commands.clean
 import commands.editor
 import commands.package
@@ -8,6 +9,7 @@ import commands.package
 
 def get_command_list():
 	return [
+		commands.artifact,
 		commands.clean,
 		commands.editor,
 		commands.package,
@@ -42,10 +44,20 @@ def load_configuration(environment):
 	configuration["package_platforms"] = [ "Android", "Linux", "Windows" ]
 	configuration["package_configurations"] = [ "Debug", "Release" ]
 
+	configuration["filesets"] = {
+		"package": {
+			"path_in_workspace": ".build/packages/{platform}/{configuration}",
+			"file_patterns": [ "**" ],
+		},
+	}
+
 	configuration["artifacts"] = {
 		"package": {
 			"file_name": "{project}_{version}_Package_{platform}_{configuration}",
 			"path_in_repository": "packages",
+			"filesets": [
+				{ "identifier": "package", "path_in_archive": "." },
+			],
 		},
 	}
 
