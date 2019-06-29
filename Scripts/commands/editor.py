@@ -16,6 +16,16 @@ information_messages = [
 	re.compile(r"^\[ScriptCompilation\]"),
 ]
 
+warning_messages = [
+	re.compile(r"^WARNING: "),
+	re.compile(r"warning CS[0-9]+: "),
+]
+
+error_messages = [
+	re.compile(r"^ERROR: "),
+	re.compile(r"error CS[0-9]+:"),
+]
+
 
 def configure_argument_parser(environment, configuration, subparsers): # pylint: disable = unused-argument
 	return subparsers.add_parser("editor", help = "launch the editor")
@@ -67,10 +77,10 @@ def _log_unity_output(line):
 				return match
 		return None
 
-	if line.startswith("ERROR: "):
-		logging.error(line[len("ERROR: "):])
-	elif line.startswith("WARNING: "):
-		logging.warning(line[len("WARNING: "):])
+	if _match_message(line, error_messages) is not None:
+		logging.error(line)
+	elif _match_message(line, warning_messages) is not None:
+		logging.warning(line)
 	elif _match_message(line, information_messages) is not None:
 		logging.info(line)
 	else:
