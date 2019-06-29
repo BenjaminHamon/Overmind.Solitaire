@@ -1,8 +1,6 @@
 import logging
-import os
 import re
 import subprocess
-import uuid
 
 
 information_messages = [
@@ -38,8 +36,6 @@ def launch_editor(unity_executable, unity_project_path, simulate):
 
 
 def run_editor_command(unity_executable, unity_project_path, command, command_arguments, simulate):
-	log_file_path = os.path.join(".logs", "%s_%s.log" % (command, str(uuid.uuid4())))
-
 	unity_command = [ unity_executable, "-projectPath", unity_project_path ]
 	unity_command += [ "-batchMode", "-noGraphics", "-quit", "-logFile", "-" ]
 	unity_command += [ "-executeMethod", "Overmind.Solitaire.UnityClient.Editor.EditorCommand." + command ]
@@ -51,22 +47,15 @@ def run_editor_command(unity_executable, unity_project_path, command, command_ar
 	print("")
 
 	if not simulate:
-		os.makedirs(os.path.dirname(log_file_path), exist_ok = True)
+		process = subprocess.Popen(unity_command, stdout = subprocess.PIPE, stderr = subprocess.STDOUT, universal_newlines = True)
 
-		with open(log_file_path, "w") as log_file:
-			log_file.write("# Workspace: '%s'\n" % os.getcwd())
-			log_file.write("# Command: %s\n" % " ".join(("'" + x + "'") if " " in x else x for x in unity_command))
-			log_file.write("\n")
+		for line in process.stdout:
+			line = line.rstrip()
+			_log_unity_output(line)
 
-			process = subprocess.Popen(unity_command, stdout = subprocess.PIPE, stderr = subprocess.STDOUT, universal_newlines = True)
-
-			for line in process.stdout:
-				line = line.rstrip()
-				_log_unity_output(line)
-
-			result = process.wait()
-			if result != 0:
-				raise RuntimeError("Unity editor command '%s' failed" % command)
+		result = process.wait()
+		if result != 0:
+			raise RuntimeError("Unity editor command '%s' failed" % command)
 
 
 def _log_unity_output(line):
