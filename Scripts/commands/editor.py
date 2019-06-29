@@ -4,8 +4,6 @@ import re
 import subprocess
 import uuid
 
-import environment
-
 
 information_messages = [
 	re.compile(r"^Loading GUID <-> Path mappings..."),
@@ -33,7 +31,7 @@ def launch_editor(unity_executable, unity_project_path, simulate):
 	logging.info("Launching the editor")
 
 	unity_command = [ unity_executable, "-projectPath", unity_project_path ]
-	
+
 	logging.info("+ %s", " ".join(("'" + x + "'") if " " in x else x for x in unity_command))
 	if not simulate:
 		subprocess.Popen(unity_command)
@@ -48,7 +46,7 @@ def run_editor_command(unity_executable, unity_project_path, command, command_ar
 
 	if command_arguments:
 		unity_command += [ "-executeMethodArguments" ] + [ key + "=" + value for key, value in command_arguments.items() ]
-	
+
 	logging.info("+ %s", " ".join(("'" + x + "'") if " " in x else x for x in unity_command))
 	print("")
 

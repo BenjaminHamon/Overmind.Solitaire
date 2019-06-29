@@ -1,6 +1,5 @@
 import logging
 import os
-import subprocess
 
 import commands.editor
 
@@ -21,15 +20,18 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 		"platform": arguments.platform,
 		"configuration": arguments.configuration,
 	}
-	
+
 	artifact = configuration["artifacts"]["package"]
 	artifact_name = artifact["file_name"].format(**parameters)
 	local_artifact_path = os.path.join(".artifacts", artifact["path_in_repository"], artifact_name)
 
-	package(environment["unity_2019_executable"], configuration["unity_project_path"], arguments.platform, arguments.configuration, local_artifact_path, arguments.simulate)
+	unity_executable = environment["unity_2019_executable"]
+	unity_project_path = configuration["unity_project_path"]
+
+	package(unity_executable, unity_project_path, arguments.platform, arguments.configuration, local_artifact_path, arguments.simulate)
 
 
-def package(unity_executable, unity_project_path, platform, configuration, destination, simulate):
+def package(unity_executable, unity_project_path, platform, configuration, destination, simulate): # pylint: disable = too-many-arguments
 	logging.info("Packaging for platform '%s' with configuration '%s'", platform, configuration)
 	logging.info("Writing package to '%s'", destination)
 
