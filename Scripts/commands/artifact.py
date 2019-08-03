@@ -12,20 +12,27 @@ import workspace
 
 def configure_argument_parser(environment, configuration, subparsers): # pylint: disable = unused-argument
 
+	available_commands = [ "show", "package", "verify", "upload" ]
+
+	def parse_command_parameter(argument_value):
+		command_list = argument_value.split("+")
+		for command in command_list:
+			if command not in available_commands:
+				raise argparse.ArgumentTypeError("invalid artifact command: '%s'" % command)
+		return command_list
+
 	def parse_key_value_parameter(argument_value):
 		key_value = argument_value.split("=")
 		if len(key_value) != 2:
 			raise argparse.ArgumentTypeError("invalid key value parameter: '%s'" % argument_value)
 		return (key_value[0], key_value[1])
 
-	command_list = [ "show", "package", "verify", "upload" ]
-
 	parser = subparsers.add_parser("artifact", formatter_class = argparse.RawTextHelpFormatter,
 		help = "execute commands related to build artifacts")
+	parser.add_argument("artifact_commands", type = parse_command_parameter,
+		metavar = "<command[+command]>", help = "set the command(s) to execute for the artifact, separated by '+'" + "\n" + "(%s)" % ", ".join(available_commands))
 	parser.add_argument("artifact", choices = configuration["artifacts"].keys(),
 		metavar = "<artifact>", help = "set an artifact definition to use for the commands")
-	parser.add_argument("--command", choices = command_list, nargs = "+", dest = "artifact_commands",
-		metavar = "<command>", help = "set the command(s) to execute for the artifact" + "\n" + "(%s)" % ", ".join(command_list))
 	parser.add_argument("--parameters", nargs = "*", type = parse_key_value_parameter, default = [],
 		metavar = "<key=value>", help = "set parameters for the artifact")
 	parser.add_argument("--overwrite", action = "store_true",
