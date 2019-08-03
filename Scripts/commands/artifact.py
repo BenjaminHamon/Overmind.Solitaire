@@ -4,9 +4,8 @@ import filecmp
 import glob
 import logging
 import os
-import shutil
-import zipfile
 
+import model.artifacts
 import workspace
 
 
@@ -27,10 +26,10 @@ def configure_argument_parser(environment, configuration, subparsers): # pylint:
 			raise argparse.ArgumentTypeError("invalid key value parameter: '%s'" % argument_value)
 		return (key_value[0], key_value[1])
 
-	parser = subparsers.add_parser("artifact", formatter_class = argparse.RawTextHelpFormatter,
+	parser = subparsers.add_parser("artifact",
 		help = "execute commands related to build artifacts")
 	parser.add_argument("artifact_commands", type = parse_command_parameter,
-		metavar = "<command[+command]>", help = "set the command(s) to execute for the artifact, separated by '+'" + "\n" + "(%s)" % ", ".join(available_commands))
+		metavar = "<command[+command]>", help = "set the command(s) to execute for the artifact, separated by '+' (%s)" % ", ".join(available_commands))
 	parser.add_argument("artifact", choices = configuration["artifacts"].keys(),
 		metavar = "<artifact>", help = "set an artifact definition to use for the commands")
 	parser.add_argument("--parameters", nargs = "*", type = parse_key_value_parameter, default = [],
@@ -50,83 +49,31 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 
 	artifact = configuration["artifacts"][arguments.artifact]
 	artifact_name = artifact["file_name"].format(**parameters)
-	local_artifact_path = os.path.join(".artifacts", artifact["path_in_repository"], artifact_name)
 
-	if "upload" in arguments.artifact_commands:
-		remote_artifact_path = os.path.join(configuration["artifact_repository"], artifact["path_in_repository"], artifact_name)
+	artifact_repository = model.artifacts.ArtifactRepository(".artifacts", configuration["project_identifier_for_artifact_server"])
+	if environment.get("artifact_server_url", None) is not None:
+		artifact_server_url = environment["artifact_server_url"]
+		artifact_server_parameters = environment.get("artifact_server_parameters", {})
+		artifact_repository.server_client = model.artifacts.create_artifact_server_client(artifact_server_url, artifact_server_parameters, environment)
+
+	if "upload" in arguments.artifact_commands and artifact_repository.server_client is None:
+		raise ValueError("Upload command requires an artifact server")
 
 	if "show" in arguments.artifact_commands:
 		artifact_files = list_artifact_files(artifact, configuration, parameters)
-		show(artifact_name, artifact_files)
+		artifact_repository.show(artifact_name, artifact_files)
 		print("")
 	if "package" in arguments.artifact_commands:
 		artifact_files = merge_artifact_mapping(map_artifact_files(artifact, configuration, parameters))
-		package(local_artifact_path, artifact_files, arguments.simulate)
+		artifact_repository.package(artifact["path_in_repository"], artifact_name, artifact_files, arguments.simulate)
 		print("")
 	if "verify" in arguments.artifact_commands:
-		verify(local_artifact_path, arguments.simulate)
+		artifact_repository.verify(artifact["path_in_repository"], artifact_name, arguments.simulate)
 		print("")
 	if "upload" in arguments.artifact_commands:
-		upload(local_artifact_path, remote_artifact_path, arguments.overwrite, arguments.simulate)
+		artifact_repository.upload(artifact["path_in_repository"], artifact_name, arguments.overwrite, arguments.simulate)
 		save_results(artifact_name, arguments.artifact, arguments.results, arguments.simulate)
 		print("")
-
-
-def show(artifact_name, artifact_files):
-	logging.info("Artifact '%s'", artifact_name)
-
-	for file_path in artifact_files:
-		logging.info("+ '%s'", file_path)
-
-
-def package(artifact_path, artifact_files, simulate):
-	logging.info("Packaging artifact '%s'", os.path.basename(artifact_path))
-
-	if len(artifact_files) == 0:
-		raise RuntimeError("The artifact is empty")
-
-	logging.info("Writing '%s'", artifact_path + ".zip")
-
-	artifact_directory = os.path.dirname(artifact_path)
-	if not simulate and not os.path.isdir(artifact_directory):
-		os.makedirs(artifact_directory)
-
-	if simulate:
-		for source, destination in artifact_files:
-			logging.info("+ '%s' => '%s'", source, destination)
-	else:
-		with zipfile.ZipFile(artifact_path + ".zip.tmp", "w", zipfile.ZIP_DEFLATED) as artifact_file:
-			for source, destination in artifact_files:
-				logging.info("+ '%s' => '%s'", source, destination)
-				artifact_file.write(source, destination)
-		shutil.move(artifact_path + ".zip.tmp", artifact_path + ".zip")
-
-
-def verify(artifact_path, simulate):
-	logging.info("Verifying artifact '%s'", os.path.basename(artifact_path))
-	logging.info("Reading '%s'", artifact_path + ".zip")
-
-	if not simulate:
-		with zipfile.ZipFile(artifact_path + ".zip", 'r') as artifact_file:
-			if artifact_file.testzip():
-				raise RuntimeError('Artifact package is corrupted')
-
-
-def upload(local_artifact_path, remote_artifact_path, overwrite, simulate):
-	logging.info("Uploading artifact '%s'", os.path.basename(local_artifact_path))
-
-	if not overwrite and os.path.exists(remote_artifact_path + ".zip"):
-		raise ValueError("Artifact already exists")
-
-	logging.info("Copying '%s' to '%s'", local_artifact_path + ".zip", remote_artifact_path + ".zip")
-
-	remote_artifact_directory = os.path.dirname(remote_artifact_path)
-	if not simulate and not os.path.isdir(remote_artifact_directory):
-		os.makedirs(remote_artifact_directory)
-
-	if not simulate:
-		shutil.copyfile(local_artifact_path + ".zip", remote_artifact_path + ".zip.tmp")
-		shutil.move(remote_artifact_path + ".zip.tmp", remote_artifact_path + ".zip")
 
 
 def save_results(artifact_name, artifact_type, result_file_path, simulate):

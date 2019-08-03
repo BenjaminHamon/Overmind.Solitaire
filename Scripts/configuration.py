@@ -1,5 +1,4 @@
 import datetime
-import os
 import subprocess
 
 import commands.artifact
@@ -45,8 +44,7 @@ def load_configuration(environment):
 	configuration["package_platforms"] = [ "Android", "Linux", "Windows" ]
 	configuration["package_configurations"] = [ "Debug", "Release" ]
 
-	if "artifact_repository" in environment:
-		configuration["artifact_repository"] = os.path.join(os.path.normpath(environment["artifact_repository"]), "Solitaire")
+	configuration["project_identifier_for_artifact_server"] = "Solitaire"
 
 	configuration["filesets"] = {
 		"package": {
