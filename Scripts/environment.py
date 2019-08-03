@@ -16,6 +16,8 @@ def configure_logging(log_level):
 def create_default_environment():
 	return {
 		"git_executable": "git",
+		"scp_executable": "scp",
+		"ssh_executable": "ssh",
 		"unity_2019_executable": "unity_2019",
 	}
 
