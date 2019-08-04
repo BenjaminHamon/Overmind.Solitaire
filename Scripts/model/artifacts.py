@@ -176,7 +176,7 @@ class ArtifactServerSshClient:
 
 		self.create_directory(remote_repository, path_in_repository, simulate)
 
-		upload_command = [ self.scp_executable ] + self.ssh_parameters + [ local_artifact_path + ".zip" ]
+		upload_command = [ self.scp_executable ] + self.ssh_parameters + [ local_artifact_path + file_extension ]
 		upload_command += [ self.server_user + "@" + self.server_host + ":" + remote_artifact_path + file_extension + ".tmp" ]
 
 		logger.info("+ %s", " ".join(("'" + x + "'") if " " in x else x for x in upload_command))
