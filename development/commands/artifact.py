@@ -9,6 +9,9 @@ import development.model.artifacts
 import development.workspace
 
 
+logger = logging.getLogger("Main")
+
+
 def configure_argument_parser(environment, configuration, subparsers): # pylint: disable = unused-argument
 
 	available_commands = [ "show", "package", "verify", "upload" ]
@@ -138,7 +141,7 @@ def merge_artifact_mapping(artifact_files):
 		for source in source_collection[1:]:
 			if not filecmp.cmp(source_collection[0], source):
 				has_conflicts = True
-				logging.error("Mapping conflict: %s, %s => %s", source_collection[0], source, destination)
+				logger.error("Mapping conflict: %s, %s => %s", source_collection[0], source, destination)
 		merged_files.append((source_collection[0], destination))
 
 	if has_conflicts:

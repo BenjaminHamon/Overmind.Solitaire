@@ -19,7 +19,8 @@ def main():
 	os.chdir(workspace_directory)
 
 	try:
-		development.environment.configure_logging(logging.INFO)
+		environment_instance = development.environment.load_environment()
+		development.environment.configure_logging(environment_instance)
 		command_list = development.configuration.load_commands()
 
 		check_commands(command_list)

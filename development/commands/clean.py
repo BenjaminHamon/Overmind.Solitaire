@@ -4,6 +4,9 @@ import os
 import shutil
 
 
+logger = logging.getLogger("Main")
+
+
 def configure_argument_parser(environment, configuration, subparsers): # pylint: disable = unused-argument
 	return subparsers.add_parser("clean", help = "clean the workspace")
 
@@ -13,7 +16,7 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 
 
 def clean(unity_project_path, simulate):
-	logging.info("Cleaning the workspace")
+	logger.info("Cleaning the workspace")
 	print("")
 
 	directories_to_clean = [
@@ -26,15 +29,15 @@ def clean(unity_project_path, simulate):
 
 	for directory in directories_to_clean:
 		if os.path.exists(directory["path"]):
-			logging.info("Removing directory '%s' (Path: %s)", directory["display_name"], directory["path"])
+			logger.info("Removing directory '%s' (Path: %s)", directory["display_name"], directory["path"])
 			if not simulate:
 				shutil.rmtree(directory["path"])
 
 	for file_path in glob.glob(os.path.join(unity_project_path, "*.sln")):
-		logging.info("Removing generated solution '%s'", file_path)
+		logger.info("Removing generated solution '%s'", file_path)
 		if not simulate:
 			os.remove(file_path)
 	for file_path in glob.glob(os.path.join(unity_project_path, "*.csproj")):
-		logging.info("Removing generated project '%s'", file_path)
+		logger.info("Removing generated project '%s'", file_path)
 		if not simulate:
 			os.remove(file_path)

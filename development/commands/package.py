@@ -4,6 +4,9 @@ import os
 import development.commands.editor
 
 
+logger = logging.getLogger("Main")
+
+
 def configure_argument_parser(environment, configuration, subparsers): # pylint: disable = unused-argument
 	parser = subparsers.add_parser("package", help = "generate a standalone package")
 	parser.add_argument("--platform", required = True, choices = configuration["package_platforms"],
@@ -22,8 +25,8 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 
 
 def package(unity_executable, unity_project_path, platform, configuration, destination, simulate): # pylint: disable = too-many-arguments
-	logging.info("Packaging for platform '%s' with configuration '%s'", platform, configuration)
-	logging.info("Writing package to '%s'", destination)
+	logger.info("Packaging for platform '%s' with configuration '%s'", platform, configuration)
+	logger.info("Writing package to '%s'", destination)
 
 	command_arguments = {
 		"platform": platform,
