@@ -1,19 +1,7 @@
 import datetime
+import importlib
 import subprocess
-
-import development.commands.artifact
-import development.commands.clean
-import development.commands.editor
-import development.commands.package
-
-
-def get_command_list():
-	return [
-		development.commands.artifact,
-		development.commands.clean,
-		development.commands.editor,
-		development.commands.package,
-	]
+import sys
 
 
 def load_configuration(environment):
@@ -64,3 +52,28 @@ def load_configuration(environment):
 	}
 
 	return configuration
+
+
+def load_commands():
+	all_modules = [
+		"development.commands.artifact",
+		"development.commands.clean",
+		"development.commands.editor",
+		"development.commands.package",
+	]
+
+	return [ import_command(module) for module in all_modules ]
+
+
+def import_command(module_name):
+	try:
+		return {
+			"module_name": module_name,
+			"module": importlib.import_module(module_name),
+		}
+
+	except ImportError:
+		return {
+			"module_name": module_name,
+			"exception": sys.exc_info(),
+		}
