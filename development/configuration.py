@@ -1,18 +1,18 @@
 import datetime
 import subprocess
 
-import commands.artifact
-import commands.clean
-import commands.editor
-import commands.package
+import development.commands.artifact
+import development.commands.clean
+import development.commands.editor
+import development.commands.package
 
 
 def get_command_list():
 	return [
-		commands.artifact,
-		commands.clean,
-		commands.editor,
-		commands.package,
+		development.commands.artifact,
+		development.commands.clean,
+		development.commands.editor,
+		development.commands.package,
 	]
 
 

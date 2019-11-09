@@ -5,8 +5,8 @@ import glob
 import logging
 import os
 
-import model.artifacts
-import workspace
+import development.model.artifacts
+import development.workspace
 
 
 def configure_argument_parser(environment, configuration, subparsers): # pylint: disable = unused-argument
@@ -50,11 +50,11 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 	artifact = configuration["artifacts"][arguments.artifact]
 	artifact_name = artifact["file_name"].format(**parameters)
 
-	artifact_repository = model.artifacts.ArtifactRepository(".artifacts", configuration["project_identifier_for_artifact_server"])
+	artifact_repository = development.model.artifacts.ArtifactRepository(".artifacts", configuration["project_identifier_for_artifact_server"])
 	if environment.get("artifact_server_url", None) is not None:
 		artifact_server_url = environment["artifact_server_url"]
 		artifact_server_parameters = environment.get("artifact_server_parameters", {})
-		artifact_repository.server_client = model.artifacts.create_artifact_server_client(artifact_server_url, artifact_server_parameters, environment)
+		artifact_repository.server_client = development.model.artifacts.create_artifact_server_client(artifact_server_url, artifact_server_parameters, environment)
 
 	if "upload" in arguments.artifact_commands and artifact_repository.server_client is None:
 		raise ValueError("Upload command requires an artifact server")
@@ -83,10 +83,10 @@ def save_results(artifact_name, artifact_type, result_file_path, simulate):
 	}
 
 	if result_file_path:
-		results = workspace.load_results(result_file_path)
+		results = development.workspace.load_results(result_file_path)
 		results["artifacts"].append(artifact_information)
 		if not simulate:
-			workspace.save_results(result_file_path, results)
+			development.workspace.save_results(result_file_path, results)
 
 
 def list_artifact_files(artifact, configuration, parameters):

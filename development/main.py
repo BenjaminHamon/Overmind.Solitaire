@@ -1,9 +1,12 @@
 import argparse
 import logging
 import os
+import sys
 
-import configuration
-import environment
+sys.path.insert(0, os.path.join(sys.path[0], ".."))
+
+import development.configuration # pylint: disable = wrong-import-position
+import development.environment # pylint: disable = wrong-import-position
 
 
 def main():
@@ -11,11 +14,11 @@ def main():
 	workspace_directory = os.path.dirname(os.path.dirname(script_path))
 	os.chdir(workspace_directory)
 
-	environment_instance = environment.load_environment()
-	configuration_instance = configuration.load_configuration(environment_instance)
+	environment_instance = development.environment.load_environment()
+	configuration_instance = development.configuration.load_configuration(environment_instance)
 
 	arguments = parse_arguments(environment_instance, configuration_instance)
-	environment.configure_logging(logging.getLevelName(arguments.verbosity.upper()))
+	development.environment.configure_logging(logging.getLevelName(arguments.verbosity.upper()))
 
 	show_project_information(configuration_instance, arguments.simulate)
 	arguments.func(environment_instance, configuration_instance, arguments)
@@ -33,7 +36,7 @@ def parse_arguments(environment_instance, configuration_instance):
 	subparsers = main_parser.add_subparsers(title = "commands", metavar = "<command>")
 	subparsers.required = True
 
-	for command_module in configuration.get_command_list():
+	for command_module in development.configuration.get_command_list():
 		command_parser = command_module.configure_argument_parser(environment_instance, configuration_instance, subparsers)
 		command_parser.set_defaults(func = command_module.run)
 

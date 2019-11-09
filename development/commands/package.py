@@ -1,7 +1,7 @@
 import logging
 import os
 
-import commands.editor
+import development.commands.editor
 
 
 def configure_argument_parser(environment, configuration, subparsers): # pylint: disable = unused-argument
@@ -31,4 +31,4 @@ def package(unity_executable, unity_project_path, platform, configuration, desti
 		"destination": os.path.abspath(destination),
 	}
 
-	commands.editor.run_editor_command(unity_executable, unity_project_path, "GeneratePackage", command_arguments, simulate)
+	development.commands.editor.run_editor_command(unity_executable, unity_project_path, "GeneratePackage", command_arguments, simulate)
