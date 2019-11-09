@@ -28,6 +28,10 @@ def load_configuration(environment):
 	configuration["project_url"] = "https://github.com/BenjaminHamon/Overmind.Solitaire"
 	configuration["copyright"] = "Copyright (c) 2019 Benjamin Hamon"
 
+	configuration["development_toolkit"] = "git+https://github.com/BenjaminHamon/DevelopmentToolkit@{revision}#subdirectory=toolkit"
+	configuration["development_toolkit_revision"] = "a4ad1edfb956641c420d42ff369087cffb6d7584"
+	configuration["development_dependencies"] = [ "pylint" ]
+
 	configuration["unity_project_path"] = "UnityClient"
 	configuration["package_platforms"] = [ "Android", "Linux", "Windows" ]
 	configuration["package_configurations"] = [ "Debug", "Release" ]
@@ -58,6 +62,7 @@ def load_commands():
 	all_modules = [
 		"development.commands.artifact",
 		"development.commands.clean",
+		"development.commands.develop",
 		"development.commands.editor",
 		"development.commands.package",
 	]
