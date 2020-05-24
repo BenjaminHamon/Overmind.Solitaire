@@ -7,7 +7,7 @@ import sys
 
 def load_configuration(environment):
 	configuration = {
-		"project": "Overmind.Solitaire",
+		"project_identifier": "Overmind.Solitaire",
 		"project_name": "Overmind Solitaire",
 		"project_version": { "identifier": "1.0" },
 	}

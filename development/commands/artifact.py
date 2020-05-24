@@ -45,7 +45,7 @@ def configure_argument_parser(environment, configuration, subparsers): # pylint:
 
 def run(environment, configuration, arguments): # pylint: disable = unused-argument
 	parameters = {
-		"project": configuration["project"],
+		"project": configuration["project_identifier"],
 		"version": configuration["project_version"]["full"],
 	}
 
