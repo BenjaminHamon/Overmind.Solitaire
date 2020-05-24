@@ -12,16 +12,15 @@ def configure_argument_parser(environment, configuration, subparsers): # pylint:
 
 
 def run(environment, configuration, arguments): # pylint: disable = unused-argument
-	clean(configuration["unity_project_path"], arguments.simulate)
+	clean(configuration["unity_project_path"], configuration["artifact_directory"], arguments.simulate)
 
 
-def clean(unity_project_path, simulate):
+def clean(unity_project_path, artifact_directory, simulate):
 	logger.info("Cleaning the workspace")
 	print("")
 
 	directories_to_clean = [
-		{ "display_name": "Build", "path": ".build" },
-		{ "display_name": "Build artifacts", "path": ".artifacts" },
+		{ "display_name": "Artifacts", "path": artifact_directory },
 		{ "display_name": "Unity cache", "path": os.path.join(unity_project_path, "Library") },
 		{ "display_name": "Unity logs", "path": os.path.join(unity_project_path, "Logs") },
 		{ "display_name": "Unity temporary files", "path": os.path.join(unity_project_path, "Temp") },

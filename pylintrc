@@ -3,7 +3,7 @@ const-naming-style = snake_case
 
 [FORMAT]
 indent-string = '\t'
-max-line-length = 160
+max-line-length = 200
 
 [MESSAGES CONTROL]
 disable =

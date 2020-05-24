@@ -1,5 +1,6 @@
 import datetime
 import importlib
+import os
 import subprocess
 import sys
 
@@ -38,9 +39,11 @@ def load_configuration(environment):
 
 	configuration["project_identifier_for_artifact_server"] = "Solitaire"
 
+	configuration["artifact_directory"] = "Artifacts"
+
 	configuration["filesets"] = {
 		"package": {
-			"path_in_workspace": ".build/Packages/{platform}/{configuration}",
+			"path_in_workspace": os.path.join(configuration["artifact_directory"], "Packages", "{platform}", "{configuration}"),
 			"file_patterns": [ "**" ],
 		},
 	}

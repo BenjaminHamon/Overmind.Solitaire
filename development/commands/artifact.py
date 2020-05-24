@@ -1,5 +1,6 @@
 import argparse
 import logging
+import os
 
 import bhamon_development_toolkit.artifacts.filesets as artifact_filesets
 import bhamon_development_toolkit.workspace
@@ -53,7 +54,7 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 	artifact = configuration["artifacts"][arguments.artifact]
 	artifact_name = artifact["file_name"].format(**parameters)
 
-	artifact_repository = ArtifactRepository(".artifacts", configuration["project_identifier_for_artifact_server"])
+	artifact_repository = ArtifactRepository(os.path.join(configuration["artifact_directory"], "Repository"), configuration["project_identifier_for_artifact_server"])
 	if environment.get("artifact_server_url", None) is not None:
 		artifact_server_url = environment["artifact_server_url"]
 		artifact_server_parameters = environment.get("artifact_server_parameters", {})
