@@ -39,7 +39,7 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 
 
 def launch_editor(unity_executable, unity_project_path, simulate):
-	logger.info("Launching the editor")
+	logger.info("Launching editor for '%s'", unity_project_path)
 
 	unity_command = [ unity_executable, "-projectPath", unity_project_path ]
 
@@ -51,8 +51,9 @@ def launch_editor(unity_executable, unity_project_path, simulate):
 def run_editor_command(unity_executable, unity_project_path, command, command_arguments, simulate):
 	unity_command = [ unity_executable, "-projectPath", unity_project_path ]
 	unity_command += [ "-batchMode", "-noGraphics", "-quit", "-logFile", "-" ]
-	unity_command += [ "-executeMethod", "Overmind.Solitaire.UnityClient.Editor.EditorCommand." + command ]
 
+	if command:
+		unity_command += [ "-executeMethod", "Overmind.Solitaire.UnityClient.Editor.EditorCommand." + command ]
 	if command_arguments:
 		unity_command += [ "-executeMethodArguments" ] + [ key + "=" + value for key, value in command_arguments.items() ]
 

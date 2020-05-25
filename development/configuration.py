@@ -87,6 +87,7 @@ def load_commands():
 		"development.commands.editor",
 		"development.commands.info",
 		"development.commands.package",
+		"development.commands.reimport",
 	]
 
 	return [ import_command(module) for module in all_modules ]
