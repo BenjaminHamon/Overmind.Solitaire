@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import platform
 import sys
 
 
@@ -16,7 +17,7 @@ def create_default_environment():
 		"git_executable": "git",
 		"scp_executable": "scp",
 		"ssh_executable": "ssh",
-		"unity_2019_executable": "unity_2019",
+		"unity_executable": find_unity(),
 	}
 
 
@@ -60,3 +61,9 @@ def configure_log_file(environment_instance, file_path):
 	file_handler.setLevel(logging_level)
 	file_handler.formatter = formatter
 	logging.root.addHandler(file_handler)
+
+
+def find_unity():
+	if platform.system() == "Windows":
+		return os.path.join(os.environ["ProgramFiles"], "Unity", "Hub", "Editor", "{version}", "Editor", "Unity.exe")
+	return "unity_{version}"

@@ -17,7 +17,7 @@ def configure_argument_parser(environment, configuration, subparsers): # pylint:
 
 
 def run(environment, configuration, arguments): # pylint: disable = unused-argument
-	unity_executable = environment["unity_2019_executable"]
+	unity_executable = environment["unity_executable"]
 	unity_project_path = configuration["unity_project_path"]
 	package_path = os.path.join(configuration["artifact_directory"], "Packages", arguments.platform, arguments.configuration)
 
