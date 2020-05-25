@@ -23,6 +23,7 @@ def clean(unity_project_path, artifact_directory, simulate):
 		{ "display_name": "Artifacts", "path": artifact_directory },
 		{ "display_name": "Unity cache", "path": os.path.join(unity_project_path, "Library") },
 		{ "display_name": "Unity logs", "path": os.path.join(unity_project_path, "Logs") },
+		{ "display_name": "Unity intermediate binaries", "path": os.path.join(unity_project_path, "obj") },
 		{ "display_name": "Unity temporary files", "path": os.path.join(unity_project_path, "Temp") },
 	]
 
