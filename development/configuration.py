@@ -20,7 +20,7 @@ def load_configuration(environment):
 	configuration["copyright"] = "Copyright (c) 2020 Benjamin Hamon"
 
 	configuration["development_toolkit"] = "git+https://github.com/BenjaminHamon/DevelopmentToolkit@{revision}#subdirectory=toolkit"
-	configuration["development_toolkit_revision"] = "a4ad1edfb956641c420d42ff369087cffb6d7584"
+	configuration["development_toolkit_revision"] = "032434c526e880fe1672f59ab4992f4b883ddbff"
 	configuration["development_dependencies"] = [ "pylint" ]
 
 	configuration["unity_project_path"] = "UnityClient"
