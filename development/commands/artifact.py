@@ -40,6 +40,7 @@ def configure_argument_parser(environment, configuration, subparsers): # pylint:
 		metavar = "<key=value>", help = "set parameters for the artifact")
 	parser.add_argument("--overwrite", action = "store_true",
 		help = "overwrite existing artifact on upload")
+
 	return parser
 
 
@@ -53,7 +54,11 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 	parameters.update(arguments.parameters)
 
 	artifact = configuration["artifacts"][arguments.artifact]
-	artifact_name = artifact["file_name"].format(**parameters)
+
+	try:
+		artifact_name = artifact["file_name"].format(**parameters)
+	except KeyError as exception:
+		raise KeyError("Artifact parameter '%s' is required" % exception.args[0]) from exception
 
 	artifact_repository = ArtifactRepository(os.path.join(configuration["artifact_directory"], "Repository"), configuration["project_identifier_for_artifact_server"])
 	if environment.get("artifact_server_url", None) is not None:
