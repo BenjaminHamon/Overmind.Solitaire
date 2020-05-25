@@ -70,7 +70,7 @@ def load_filesets(artifact_directory):
 def load_artifacts():
 	return {
 		"package": {
-			"file_name": "{project}_{version}_Package_{platform}_{configuration}",
+			"file_name": "{project}_{version}+{revision}_Package_{platform}_{configuration}",
 			"path_in_repository": "Packages",
 			"filesets": [
 				{ "identifier": "package", "path_in_archive": "." },
