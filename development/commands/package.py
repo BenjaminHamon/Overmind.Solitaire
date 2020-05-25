@@ -21,7 +21,7 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 	unity_project_path = configuration["unity_project_path"]
 	package_path = os.path.join(configuration["artifact_directory"], "Packages", arguments.platform, arguments.configuration)
 
-	package(unity_executable, unity_project_path, arguments.platform, arguments.configuration, package_path, arguments.simulate)
+	package(unity_executable, unity_project_path, arguments.platform, arguments.configuration, package_path, simulate = arguments.simulate)
 
 
 def package(unity_executable, unity_project_path, platform, configuration, destination, simulate): # pylint: disable = too-many-arguments
@@ -34,4 +34,4 @@ def package(unity_executable, unity_project_path, platform, configuration, desti
 		"destination": os.path.abspath(destination),
 	}
 
-	development.commands.editor.run_editor_command(unity_executable, unity_project_path, "GeneratePackage", command_arguments, simulate)
+	development.commands.editor.run_editor_command(unity_executable, unity_project_path, "GeneratePackage", command_arguments, simulate = simulate)

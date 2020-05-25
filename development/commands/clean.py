@@ -12,7 +12,7 @@ def configure_argument_parser(environment, configuration, subparsers): # pylint:
 
 
 def run(environment, configuration, arguments): # pylint: disable = unused-argument
-	clean(configuration["unity_project_path"], configuration["artifact_directory"], arguments.simulate)
+	clean(configuration["unity_project_path"], configuration["artifact_directory"], simulate = arguments.simulate)
 
 
 def clean(unity_project_path, artifact_directory, simulate):

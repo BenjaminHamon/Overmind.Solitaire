@@ -79,22 +79,22 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 	if "package" in arguments.artifact_commands:
 		artifact_files = artifact_filesets.map_files(artifact, fileset_getter, parameters)
 		artifact_filesets.check_files([ src for src, dst in artifact_files ])
-		artifact_repository.package(artifact["path_in_repository"], artifact_name, artifact_files, arguments.simulate)
+		artifact_repository.package(artifact["path_in_repository"], artifact_name, artifact_files, simulate = arguments.simulate)
 		print("")
 	if "verify" in arguments.artifact_commands:
-		artifact_repository.verify(artifact["path_in_repository"], artifact_name, arguments.simulate)
+		artifact_repository.verify(artifact["path_in_repository"], artifact_name, simulate = arguments.simulate)
 		print("")
 	if "upload" in arguments.artifact_commands:
-		artifact_repository.upload(artifact["path_in_repository"], artifact_name, arguments.overwrite, arguments.simulate)
-		save_upload_results(artifact_name, arguments.artifact, arguments.results, arguments.simulate)
+		artifact_repository.upload(artifact["path_in_repository"], artifact_name, overwrite = arguments.overwrite, simulate = arguments.simulate)
+		save_upload_results(artifact_name, arguments.artifact, arguments.results, simulate = arguments.simulate)
 		print("")
 
 	if "download" in arguments.artifact_commands:
-		artifact_repository.download(artifact["path_in_repository"], artifact_name, arguments.simulate)
+		artifact_repository.download(artifact["path_in_repository"], artifact_name, simulate = arguments.simulate)
 		print("")
 	if "install" in arguments.artifact_commands:
 		installation_directory = (arguments.installation_directory if arguments.installation_directory else artifact["installation_directory"]).format(**parameters)
-		artifact_repository.install(artifact["path_in_repository"], artifact_name, installation_directory, arguments.simulate)
+		artifact_repository.install(artifact["path_in_repository"], artifact_name, installation_directory, simulate = arguments.simulate)
 		print("")
 
 

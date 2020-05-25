@@ -17,12 +17,12 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 
 	logger.info("Installing development toolkit")
 	development_toolkit_package = configuration["development_toolkit"].format(revision = configuration["development_toolkit_revision"])
-	install_packages(python_executable, python_package_repository, [ development_toolkit_package ], arguments.simulate)
+	install_packages(python_executable, python_package_repository, [ development_toolkit_package ], simulate = arguments.simulate)
 	print("")
 
 	if len(configuration.get("development_dependencies", [])) > 0:
 		logger.info("Installing development dependencies")
-		install_packages(python_executable, python_package_repository, configuration["development_dependencies"], arguments.simulate)
+		install_packages(python_executable, python_package_repository, configuration["development_dependencies"], simulate = arguments.simulate)
 		print("")
 
 

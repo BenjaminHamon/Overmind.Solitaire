@@ -11,9 +11,9 @@ def configure_argument_parser(environment, configuration, subparsers): # pylint:
 
 
 def run(environment, configuration, arguments): # pylint: disable = unused-argument
-	reimport(environment["unity_executable"], configuration["unity_project_path"], arguments.simulate)
+	reimport(environment["unity_executable"], configuration["unity_project_path"], simulate = arguments.simulate)
 
 
 def reimport(unity_executable, unity_project_path, simulate):
 	logger.info("Reimporting assets for '%s'", unity_project_path)
-	development.commands.editor.run_editor_command(unity_executable, unity_project_path, None, None, simulate)
+	development.commands.editor.run_editor_command(unity_executable, unity_project_path, None, None, simulate = simulate)

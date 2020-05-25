@@ -35,7 +35,7 @@ def configure_argument_parser(environment, configuration, subparsers): # pylint:
 
 
 def run(environment, configuration, arguments): # pylint: disable = unused-argument
-	launch_editor(environment["unity_executable"], configuration["unity_project_path"], arguments.simulate)
+	launch_editor(environment["unity_executable"], configuration["unity_project_path"], simulate = arguments.simulate)
 
 
 def launch_editor(unity_executable, unity_project_path, simulate):
