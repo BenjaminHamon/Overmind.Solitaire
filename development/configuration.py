@@ -79,6 +79,7 @@ def load_commands():
 		"development.commands.clean",
 		"development.commands.develop",
 		"development.commands.editor",
+		"development.commands.info",
 		"development.commands.package",
 	]
 
