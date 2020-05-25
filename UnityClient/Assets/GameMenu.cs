@@ -8,11 +8,11 @@ namespace Overmind.Solitaire.UnityClient
 	public class GameMenu : MonoBehaviour
 	{
 		[SerializeField]
-		private InputField seedInput;
+		private InputField seedInput = null;
 		[SerializeField]
-		private Button lastSeedButton;
+		private Button lastSeedButton = null;
 		[SerializeField]
-		private bool randomSeedOnStart;
+		private bool randomSeedOnStart = true;
 
 		private int seed
 		{

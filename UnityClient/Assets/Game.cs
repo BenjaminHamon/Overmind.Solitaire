@@ -10,25 +10,25 @@ namespace Overmind.Solitaire.UnityClient
 	public class Game : MonoBehaviour
 	{
 		[SerializeField]
-		private GameObject foundationPilePrefab;
+		private GameObject foundationPilePrefab = null;
 		[SerializeField]
-		private GameObject tableauPilePrefab;
+		private GameObject tableauPilePrefab = null;
 		[SerializeField]
-		private GameObject cardPrefab;
+		private GameObject cardPrefab = null;
 
 		[SerializeField]
-		private StockCardPile stock;
+		private StockCardPile stock = null;
 		[SerializeField]
-		private Transform foundation;
+		private Transform foundation = null;
 		[SerializeField]
-		private Transform tableau;
+		private Transform tableau = null;
 		[SerializeField]
-		private GameObject victory;
+		private GameObject victory = null;
 
 		[SerializeField]
-		private GameConfiguration Configuration;
+		private GameConfiguration Configuration = null;
 		[SerializeField]
-		private int Seed;
+		private int Seed = 0;
 
 		private System.Random random;
 		private List<FoundationCardPile> foundationCardPiles = new List<FoundationCardPile>();
