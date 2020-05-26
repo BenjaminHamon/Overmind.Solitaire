@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEditor.Build.Reporting;
 
 namespace Overmind.Solitaire.UnityClient.Editor
 {
@@ -35,7 +36,13 @@ namespace Overmind.Solitaire.UnityClient.Editor
 				scenes = sceneCollection.ToArray(),
 			};
 
-			BuildPipeline.BuildPlayer(buildPlayerOptions);
+			BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptions);
+
+			UnityEngine.Debug.LogFormat("[PackageBuilder] Build completed with status '{0}' ({1} errors, {2} warnings)",
+				buildReport.summary.result, buildReport.summary.totalErrors, buildReport.summary.totalWarnings);
+
+			if (buildReport.summary.result == BuildResult.Failed)
+				throw new Exception("Build failed");
 		}
 
 		private static BuildTarget ConvertPlatform(string platform)
