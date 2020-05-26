@@ -8,9 +8,9 @@ namespace Overmind.Solitaire.UnityClient
 	public class Card : MonoBehaviour
 	{
 		[SerializeField]
-		private new SpriteRenderer renderer = null;
+		private SpriteRenderer renderer = null;
 		[SerializeField]
-		private new Collider2D collider = null;
+		private Collider2D collider = null;
 		[SerializeField]
 		private Sprite frontSprite = null;
 		[SerializeField]
