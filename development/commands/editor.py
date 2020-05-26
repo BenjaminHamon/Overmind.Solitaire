@@ -7,16 +7,16 @@ logger = logging.getLogger("Main")
 
 
 information_messages = [
-	re.compile(r"^Loading GUID <-> Path mappings..."),
-	re.compile(r"^Loading Asset Database..."),
-	re.compile(r"^AssetDatabase consistency checks..."),
+	re.compile(r"^Loading GUID <-> Path mappings\.\.\."),
+	re.compile(r"^Loading Asset Database\.\.\."),
+	re.compile(r"^AssetDatabase consistency checks\.\.\."),
 	re.compile(r"^Initialize engine version: "),
-	re.compile(r"^- Starting compile "),
-	re.compile(r"^- Finished compile "),
 	re.compile(r"^Load scene 'Assets/"),
 	re.compile(r"^Complete build size "),
 	re.compile(r"^Exiting batchmode "),
 	re.compile(r"^\[ScriptCompilation\]"),
+	re.compile(r"^\[PackageBuilder\]"),
+	re.compile(r"^Exiting "),
 ]
 
 warning_messages = [
@@ -26,7 +26,11 @@ warning_messages = [
 
 error_messages = [
 	re.compile(r"^ERROR: "),
+	re.compile(r"^[a-zA-Z0-9_]*Exception: "),
 	re.compile(r"error CS[0-9]+:"),
+	re.compile(r"^Aborting batchmode due to failure:"),
+	re.compile(r"^executeMethod method [a-zA-Z0-9_\.]+ threw exception\."),
+	re.compile(r"'[a-zA-Z0-9_\-\./\\]*' is an incorrect path for a scene file\."),
 ]
 
 
@@ -66,6 +70,8 @@ def run_editor_command(unity_executable, unity_project_path, command, command_ar
 		for line in process.stdout:
 			line = line.rstrip()
 			_log_unity_output(line)
+
+		print("")
 
 		result = process.wait()
 		if result != 0:
