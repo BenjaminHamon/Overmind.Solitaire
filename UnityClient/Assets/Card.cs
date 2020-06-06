@@ -30,7 +30,9 @@ namespace Overmind.Solitaire.UnityClient
 			{
 				if (type == value)
 					return;
+
 				type = value;
+
 				UpdateSprite();
 			}
 		}
@@ -44,7 +46,9 @@ namespace Overmind.Solitaire.UnityClient
 			{
 				if (number == value)
 					return;
+
 				number = value;
+
 				UpdateSprite();
 			}
 		}
@@ -58,7 +62,9 @@ namespace Overmind.Solitaire.UnityClient
 			{
 				if (visible == value)
 					return;
+
 				visible = value;
+
 				renderer.sprite = visible ? frontSprite : backSprite;
 			}
 		}
@@ -69,15 +75,18 @@ namespace Overmind.Solitaire.UnityClient
 
 		private float lastClick;
 
-		public void Start()
+		public void OnEnable()
 		{
 			UpdateSprite();
 		}
 
 		private void UpdateSprite()
 		{
-			frontSprite = Resources.Load<Sprite>("Cards/Card" + type + number);
-			renderer.sprite = visible ? frontSprite : backSprite;
+			if (isActiveAndEnabled || (UnityEngine.Application.isPlaying == false))
+			{
+				frontSprite = Resources.Load<Sprite>("Cards/Card" + type + number);
+				renderer.sprite = visible ? frontSprite : backSprite;
+			}
 		}
 
 		public void OnMouseDown()

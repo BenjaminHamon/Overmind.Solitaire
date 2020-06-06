@@ -89,13 +89,19 @@ namespace Overmind.Solitaire.UnityClient
 
 		private Card CreateCard(CardType type, int number)
 		{
-			Card card = Instantiate(cardPrefab).GetComponent<Card>();
-			card.transform.SetParent(transform);
+			GameObject cardObject = Instantiate(cardPrefab);
+			cardObject.transform.SetParent(transform);
+			cardObject.SetActive(false);
+
+			Card card = cardObject.GetComponent<Card>();
 			card.Game = this;
 			card.Type = type;
 			card.Number = number;
 			card.Visible = false;
 			card.name = card.ToString();
+
+			cardObject.SetActive(true);
+
 			return card;
 		}
 
