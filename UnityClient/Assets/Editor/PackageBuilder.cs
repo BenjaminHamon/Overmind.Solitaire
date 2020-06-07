@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 
@@ -43,6 +45,33 @@ namespace Overmind.Solitaire.UnityClient.Editor
 
 			if (buildReport.summary.result == BuildResult.Failed)
 				throw new Exception("Build failed");
+
+			CopyAssetBundles(platform, destination);
+		}
+
+		public static void CopyAssetBundles(string platform, string packagePath)
+		{
+			UnityEngine.Debug.LogFormat("[PackageBuilder] Copying asset bundles");
+
+			string sourceDirectory = Path.Combine("AssetBundles", platform);
+			List<string> allFiles = Directory.EnumerateFiles(sourceDirectory, "*", SearchOption.AllDirectories)
+				.Where(filePath => Path.GetExtension(filePath) != ".meta")
+				.Select(filePath => Regex.Replace(filePath, "^" + Regex.Escape(sourceDirectory + Path.DirectorySeparatorChar), ""))
+				.ToList();
+
+			if (Directory.Exists(Path.Combine(packagePath, "AssetBundles")))
+				Directory.Delete(Path.Combine(packagePath, "AssetBundles"), true);
+
+			foreach (string sourcePath in allFiles)
+			{
+				string source = Path.Combine(sourceDirectory, sourcePath);
+				string destination = Path.Combine(packagePath, "AssetBundles", sourcePath);
+
+				// UnityEngine.Debug.LogFormat("[PackageBuilder] + '{0}' => '{1}'", source, destination);
+
+				Directory.CreateDirectory(Path.GetDirectoryName(destination));
+				File.Copy(source, destination);
+			}
 		}
 
 		private static BuildTarget ConvertPlatform(string platform)
