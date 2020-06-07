@@ -60,8 +60,8 @@ namespace Overmind.Solitaire.UnityClient.Editor
 		{
 			switch (configuration)
 			{
-				case "Debug": return BuildOptions.Development;
-				case "Release": return BuildOptions.None;
+				case "Debug": return BuildOptions.StrictMode | BuildOptions.Development | BuildOptions.AllowDebugging;
+				case "Release": return BuildOptions.StrictMode;
 				default: throw new ArgumentException(String.Format("Unknown configuration: '{0}'", configuration));
 			}
 		}
