@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -10,6 +11,14 @@ namespace Overmind.Solitaire.UnityClient.Editor
 {
 	public static class PackageBuilder
 	{
+		[MenuItem("Development/Build Package for Windows (Debug)")]
+		internal static void BuildPackageForWindows()
+		{
+			string packagePath = Path.Combine("..", "Artifacts", "Packages", "Windows", "Debug");
+			GeneratePackage("Windows", "Debug", packagePath);
+			Process.Start(packagePath);
+		}
+
 		public static void GeneratePackage()
 		{
 			Dictionary<string, string> arguments = EditorCommandHelpers.FindMethodArguments();
