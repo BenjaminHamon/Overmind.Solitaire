@@ -13,7 +13,12 @@ namespace Overmind.Solitaire.UnityClient.Content
 
 		public TAsset LoadOrDefaultByPath<TAsset>(string path) where TAsset : UnityEngine.Object
 		{
-			return Resources.Load<TAsset>(path);
+			return Resources.Load<TAsset>(path) ?? LoadPlaceholder<TAsset>();
+		}
+
+		public TAsset LoadPlaceholder<TAsset>() where TAsset : UnityEngine.Object
+		{
+			return Resources.Load<TAsset>("Placeholder");
 		}
 	}
 }
