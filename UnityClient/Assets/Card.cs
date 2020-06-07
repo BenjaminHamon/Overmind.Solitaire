@@ -84,7 +84,7 @@ namespace Overmind.Solitaire.UnityClient
 		{
 			if (isActiveAndEnabled || (UnityEngine.Application.isPlaying == false))
 			{
-				frontSprite = Resources.Load<Sprite>("Cards/Card" + type + number);
+				frontSprite = Application.AssetLoader.LoadOrDefaultByPath<Sprite>("Cards/Card" + type + number);
 				renderer.sprite = visible ? frontSprite : backSprite;
 			}
 		}
