@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Overmind.Solitaire.UnityClient.Content;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,8 @@ namespace Overmind.Solitaire.UnityClient
 
 		public void Start()
 		{
+			Application.AssetLoader.LoadBundle(AssetBundleNames.Cards);
+
 			if (Application.GameSeed != null)
 				Seed = Application.GameSeed.Value;
 			Debug.Log(String.Format("[Game] Starting (Seed: {0})", Seed));
@@ -70,6 +73,8 @@ namespace Overmind.Solitaire.UnityClient
 		{
 			foreach (FoundationCardPile foundationPile in foundationCardPiles)
 				foundationPile.Completed -= CheckVictory;
+
+			Application.AssetLoader.UnloadBundle(AssetBundleNames.Cards);
 		}
 
 		private List<Card> CreateDeck()

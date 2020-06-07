@@ -2,8 +2,11 @@
 {
 	public interface IAssetLoader<TAssetBase>
 	{
-		TAsset LoadByPath<TAsset>(string path) where TAsset : TAssetBase;
-		TAsset LoadOrDefaultByPath<TAsset>(string path) where TAsset : TAssetBase;
+		void LoadBundle(string bundle);
+		void UnloadBundle(string bundle);
+
+		TAsset LoadByPath<TAsset>(string bundle, string path) where TAsset : TAssetBase;
+		TAsset LoadOrDefaultByPath<TAsset>(string bundle, string path) where TAsset : TAssetBase;
 		TAsset LoadPlaceholder<TAsset>() where TAsset : TAssetBase;
 	}
 }
