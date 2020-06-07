@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Overmind.Solitaire.UnityClient.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -84,7 +85,7 @@ namespace Overmind.Solitaire.UnityClient
 		{
 			if (isActiveAndEnabled || (UnityEngine.Application.isPlaying == false))
 			{
-				frontSprite = Resources.Load<Sprite>("Cards/Card" + type + number);
+				frontSprite = Application.AssetLoader.LoadOrDefaultByPath<Sprite>(AssetBundleNames.Cards, "Sprites/Cards/Card" + type + number + ".png");
 				renderer.sprite = visible ? frontSprite : backSprite;
 			}
 		}
