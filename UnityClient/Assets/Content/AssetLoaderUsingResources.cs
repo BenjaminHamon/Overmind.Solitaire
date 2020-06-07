@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Overmind.Solitaire.UnityClient.Content
 {
-	public class ResourceLoader : IAssetLoader<UnityEngine.Object>
+	public class AssetLoaderUsingResources : IAssetLoader<UnityEngine.Object>
 	{
 		public void LoadBundle(string bundle) { }
 		public void UnloadBundle(string bundle) { }

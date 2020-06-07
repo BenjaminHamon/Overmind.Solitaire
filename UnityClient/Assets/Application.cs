@@ -22,14 +22,14 @@ namespace Overmind.Solitaire.UnityClient
 			if (UnityEngine.Application.isEditor)
 			{
 				if (UseAssetBundlesInEditor)
-					return new AssetLoader(Path.Combine("AssetBundles", GetAssetBundlePlatform(UnityEngine.Application.platform)));
+					return new AssetLoaderUsingBundles(Path.Combine("AssetBundles", GetAssetBundlePlatform(UnityEngine.Application.platform)));
 
 				return new EditorAssetLoader();
 			}
 #endif
 
 			string installationDirectory = Path.GetDirectoryName(UnityEngine.Application.dataPath);
-			return new AssetLoader(Path.Combine(installationDirectory, "AssetBundles"));
+			return new AssetLoaderUsingBundles(Path.Combine(installationDirectory, "AssetBundles"));
 		}
 
 		private static string GetAssetBundlePlatform(RuntimePlatform platform)

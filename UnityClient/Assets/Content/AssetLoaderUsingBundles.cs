@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Overmind.Solitaire.UnityClient.Content
 {
-	public class AssetLoader : IAssetLoader<UnityEngine.Object>
+	public class AssetLoaderUsingBundles : IAssetLoader<UnityEngine.Object>
 	{
-		public AssetLoader(string bundleDirectory)
+		public AssetLoaderUsingBundles(string bundleDirectory)
 		{
 			this.bundleDirectory = bundleDirectory;
 		}
