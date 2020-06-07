@@ -8,7 +8,7 @@ namespace Overmind.Solitaire.UnityClient
 		public static string ApplicationTitle { get { return "Overmind Solitaire"; } }
 		public static string ApplicationFullName { get { return "Overmind.Solitare.UnityClient"; } }
 
-		public static IAssetLoader<UnityEngine.Object> AssetLoader = new ResourceLoader();
+		public static IAssetLoader<UnityEngine.Object> AssetLoader = new EditorAssetLoader();
 
 		public static int? GameSeed;
 	}
