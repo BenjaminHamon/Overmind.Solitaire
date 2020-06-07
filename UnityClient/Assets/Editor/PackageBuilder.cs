@@ -49,13 +49,16 @@ namespace Overmind.Solitaire.UnityClient.Editor
 
 			BuildReport buildReport = BuildPipeline.BuildPlayer(buildPlayerOptions);
 
+			if (buildReport.summary.result == BuildResult.Succeeded)
+			{
+				CopyAssetBundles(platform, destination);
+			}
+
 			UnityEngine.Debug.LogFormat("[PackageBuilder] Build completed with status '{0}' ({1} errors, {2} warnings)",
 				buildReport.summary.result, buildReport.summary.totalErrors, buildReport.summary.totalWarnings);
 
 			if (buildReport.summary.result == BuildResult.Failed)
 				throw new Exception("Build failed");
-
-			CopyAssetBundles(platform, destination);
 		}
 
 		public static void CopyAssetBundles(string platform, string packagePath)
