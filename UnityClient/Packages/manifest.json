@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "com.unity.assetbundlebrowser": "1.7.0",
-    "com.unity.package-manager-ui": "2.2.0",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",
