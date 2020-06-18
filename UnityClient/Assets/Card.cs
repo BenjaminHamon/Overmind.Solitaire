@@ -181,7 +181,8 @@ namespace Overmind.Solitaire.UnityClient
 			foreach (Card child in childCards)
 				child.collider.enabled = false;
 
-			Collider2D overCollider = Physics2D.OverlapArea(bounds.min, bounds.max);
+			Collider2D overCollider = Physics2D.OverlapAreaAll(bounds.min, bounds.max)
+				.OrderBy(c => ((Vector2)c.bounds.ClosestPoint(bounds.center) - (Vector2)bounds.center).magnitude).FirstOrDefault();
 
 			if (overCollider != null)
 			{
