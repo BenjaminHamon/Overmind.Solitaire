@@ -187,9 +187,7 @@ namespace Overmind.Solitaire.UnityClient
 			if (overCollider != null)
 			{
 				// Debug.Log("[Card] Drop on " + overCollider.name, overCollider);
-				CardPile cardPile = overCollider.GetComponent<CardPile>();
-				if (cardPile == null)
-					cardPile = overCollider.GetComponentInParent<CardPile>();
+				CardPile cardPile = overCollider.GetComponentInParent<CardPile>();
 				if (cardPile != null)
 					moved = cardPile.TryPush(this);
 			}
