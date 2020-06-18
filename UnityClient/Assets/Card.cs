@@ -181,14 +181,13 @@ namespace Overmind.Solitaire.UnityClient
 			foreach (Card child in childCards)
 				child.collider.enabled = false;
 
-			Collider2D overCollider = Physics2D.OverlapArea(bounds.min, bounds.max);
+			Collider2D overCollider = Physics2D.OverlapAreaAll(bounds.min, bounds.max)
+				.OrderBy(c => ((Vector2)c.bounds.ClosestPoint(bounds.center) - (Vector2)bounds.center).magnitude).FirstOrDefault();
 
 			if (overCollider != null)
 			{
 				// Debug.Log("[Card] Drop on " + overCollider.name, overCollider);
-				CardPile cardPile = overCollider.GetComponent<CardPile>();
-				if (cardPile == null)
-					cardPile = overCollider.GetComponentInParent<CardPile>();
+				CardPile cardPile = overCollider.GetComponentInParent<CardPile>();
 				if (cardPile != null)
 					moved = cardPile.TryPush(this);
 			}
