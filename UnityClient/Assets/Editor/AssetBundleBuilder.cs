@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using UnityEditor;
+using UnityEngine;
 
 namespace Overmind.Solitaire.UnityClient.Editor
 {
@@ -18,8 +19,11 @@ namespace Overmind.Solitaire.UnityClient.Editor
 			BuildAssetBundleOptions options = BuildAssetBundleOptions.StrictMode | BuildAssetBundleOptions.DeterministicAssetBundle;
 
 			Directory.CreateDirectory(outputPath);
-			BuildPipeline.BuildAssetBundles(outputPath, options, unityPlatform);
+			AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(outputPath, options, unityPlatform);
 			AssetDatabase.Refresh();
+
+			if (manifest == null)
+				throw new Exception("Build failed");
 		}
 
 		private static BuildTarget ConvertPlatform(string platform)
