@@ -14,7 +14,6 @@ __pycache__/
 .venv/
 
 # Unity
-/UnityClient/AssetBundles
 /UnityClient/Library/
 /UnityClient/Logs/
 /UnityClient/obj/

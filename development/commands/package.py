@@ -19,19 +19,20 @@ def configure_argument_parser(environment, configuration, subparsers): # pylint:
 def run(environment, configuration, arguments): # pylint: disable = unused-argument
 	unity_executable = environment["unity_executable"]
 	unity_project_path = configuration["unity_project_path"]
-	package_path = os.path.join(configuration["artifact_directory"], "Packages", arguments.platform, arguments.configuration)
+	asset_bundle_directory = os.path.join(configuration["artifact_directory"], "AssetBundles", arguments.platform)
+	package_directory = os.path.join(configuration["artifact_directory"], "Packages", arguments.platform, arguments.configuration)
 
-	package(unity_executable, unity_project_path, arguments.platform, arguments.configuration, package_path, simulate = arguments.simulate)
+	package(unity_executable, unity_project_path, arguments.platform, arguments.configuration, asset_bundle_directory, package_directory, simulate = arguments.simulate)
 
 
-def package(unity_executable, unity_project_path, platform, configuration, destination, simulate): # pylint: disable = too-many-arguments
+def package(unity_executable, unity_project_path, platform, configuration, asset_bundle_directory, package_directory, simulate): # pylint: disable = too-many-arguments
 	logger.info("Packaging for platform '%s' with configuration '%s'", platform, configuration)
-	logger.info("Writing package to '%s'", destination)
 
 	command_arguments = {
 		"platform": platform,
 		"configuration": configuration,
-		"destination": os.path.abspath(destination),
+		"assetBundleDirectory": os.path.abspath(asset_bundle_directory),
+		"packageDirectory": os.path.abspath(package_directory),
 	}
 
 	development.commands.editor.run_editor_command(unity_executable, unity_project_path, "GeneratePackage", command_arguments, simulate = simulate)

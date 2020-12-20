@@ -7,13 +7,13 @@ namespace Overmind.Solitaire.UnityClient.Editor
 {
 	public static class AssetBundleBuilder
 	{
-		public static void BuildAllAssetBundles(string platform, string outputPath)
+		public static void BuildAllAssetBundles(string platform, string assetBundleDirectory)
 		{
 			BuildTarget unityPlatform = ConvertPlatform(platform);
 			BuildAssetBundleOptions options = BuildAssetBundleOptions.StrictMode | BuildAssetBundleOptions.DeterministicAssetBundle;
 
-			Directory.CreateDirectory(outputPath);
-			AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(outputPath, options, unityPlatform);
+			Directory.CreateDirectory(assetBundleDirectory);
+			AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(assetBundleDirectory, options, unityPlatform);
 			AssetDatabase.Refresh();
 
 			if (manifest == null)
