@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -11,32 +10,14 @@ namespace Overmind.Solitaire.UnityClient.Editor
 {
 	public static class PackageBuilder
 	{
-		[MenuItem("Development/Build Package for Windows (Debug)")]
-		internal static void BuildPackageForWindows()
+		public static void BuildPackage(string platform, string configuration, string assetBundleDirectory, string packageDirectory)
 		{
-			string packagePath = Path.Combine("..", "Artifacts", "Packages", "Windows", "Debug");
-			GeneratePackage("Windows", "Debug", packagePath);
-			Process.Start(packagePath);
-		}
-
-		public static void GeneratePackage()
-		{
-			Dictionary<string, string> arguments = EditorCommandHelpers.FindMethodArguments();
-			string platform = EditorCommandHelpers.ParseArgument<string>(arguments, "platform");
-			string configuration = EditorCommandHelpers.ParseArgument<string>(arguments, "configuration");
-			string destination = EditorCommandHelpers.ParseArgument<string>(arguments, "destination");
-
-			GeneratePackage(platform, configuration, destination);
-		}
-
-		public static void GeneratePackage(string platform, string configuration, string destination)
-		{
-			UnityEngine.Debug.LogFormat("[PackageBuilder] Packaging for platform '{0}' with configuration '{1}'", platform, configuration);
-			UnityEngine.Debug.LogFormat("[PackageBuilder] Writing package to '{0}'", destination);
+			UnityEngine.Debug.LogFormat("[PackageBuilder] Building package for platform '{0}' with configuration '{1}'", platform, configuration);
+			UnityEngine.Debug.LogFormat("[PackageBuilder] Writing to '{0}'", packageDirectory);
 
 			BuildTarget unityPlatform = ConvertPlatform(platform);
 			BuildOptions options = GetOptions(configuration);
-			string packagePath = BuildPackagePath(unityPlatform, destination, Application.ApplicationFullName);
+			string packagePath = BuildPackagePath(unityPlatform, packageDirectory, Application.ApplicationFullName);
 			List<string> sceneCollection = new List<string>() { "Assets/MenuScene.unity", "Assets/GameScene.unity" };
 
 			BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions()
@@ -51,7 +32,7 @@ namespace Overmind.Solitaire.UnityClient.Editor
 
 			if (buildReport.summary.result == BuildResult.Succeeded)
 			{
-				CopyAssetBundles(platform, destination);
+				CopyAssetBundles(platform, assetBundleDirectory, packageDirectory);
 			}
 
 			UnityEngine.Debug.LogFormat("[PackageBuilder] Build completed with status '{0}' ({1} errors, {2} warnings)",
@@ -61,23 +42,22 @@ namespace Overmind.Solitaire.UnityClient.Editor
 				throw new Exception("Build failed");
 		}
 
-		public static void CopyAssetBundles(string platform, string packagePath)
+		public static void CopyAssetBundles(string platform, string assetBundleDirectory, string packageDirectory)
 		{
 			UnityEngine.Debug.LogFormat("[PackageBuilder] Copying asset bundles");
 
-			string sourceDirectory = Path.Combine("AssetBundles", platform);
-			List<string> allFiles = Directory.EnumerateFiles(sourceDirectory, "*", SearchOption.AllDirectories)
+			List<string> allFiles = Directory.EnumerateFiles(assetBundleDirectory, "*", SearchOption.AllDirectories)
 				.Where(filePath => Path.GetExtension(filePath) != ".meta")
-				.Select(filePath => Regex.Replace(filePath, "^" + Regex.Escape(sourceDirectory + Path.DirectorySeparatorChar), ""))
+				.Select(filePath => Regex.Replace(filePath, "^" + Regex.Escape(assetBundleDirectory + Path.DirectorySeparatorChar), ""))
 				.ToList();
 
-			if (Directory.Exists(Path.Combine(packagePath, "AssetBundles")))
-				Directory.Delete(Path.Combine(packagePath, "AssetBundles"), true);
+			if (Directory.Exists(Path.Combine(packageDirectory, "AssetBundles")))
+				Directory.Delete(Path.Combine(packageDirectory, "AssetBundles"), true);
 
 			foreach (string sourcePath in allFiles)
 			{
-				string source = Path.Combine(sourceDirectory, sourcePath);
-				string destination = Path.Combine(packagePath, "AssetBundles", sourcePath);
+				string source = Path.Combine(assetBundleDirectory, sourcePath);
+				string destination = Path.Combine(packageDirectory, "AssetBundles", sourcePath);
 
 				// UnityEngine.Debug.LogFormat("[PackageBuilder] + '{0}' => '{1}'", source, destination);
 

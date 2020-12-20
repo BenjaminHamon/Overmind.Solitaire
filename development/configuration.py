@@ -29,8 +29,8 @@ def load_configuration(environment):
 	if environment.get("unity_executable", None) is not None:
 		environment["unity_executable"] = environment["unity_executable"].format(version = configuration["unity_version"])
 
-	configuration["package_platforms"] = [ "Android", "Linux", "Windows" ]
-	configuration["package_configurations"] = [ "Debug", "Release" ]
+	configuration["build_platforms"] = [ "Android", "Linux", "Windows" ]
+	configuration["build_configurations"] = [ "Debug", "Release" ]
 
 	configuration["project_identifier_for_artifact_server"] = "Solitaire"
 
@@ -82,11 +82,12 @@ def load_artifacts():
 def load_commands():
 	all_modules = [
 		"development.commands.artifact",
+		"development.commands.build_asset_bundles",
+		"development.commands.build_package",
 		"development.commands.clean",
 		"development.commands.develop",
 		"development.commands.editor",
 		"development.commands.info",
-		"development.commands.package",
 		"development.commands.reimport",
 	]
 
@@ -113,3 +114,17 @@ def get_unity_version(unity_project_path):
 		version_text = version_file.read()
 
 	return re.search(r"^m_EditorVersion: (?P<version>[0-9a-z\.]*)$", version_text, flags = re.MULTILINE).group("version")
+
+
+def convert_to_unity_platform(platform):
+	if platform is None:
+		return None
+
+	if platform == "Android":
+		return "Android"
+	if platform == "Linux":
+		return "Linux64"
+	if platform == "Windows":
+		return "Win64"
+
+	raise ValueError("Unsupported platform: '%s'" % platform)

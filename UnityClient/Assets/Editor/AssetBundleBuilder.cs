@@ -1,26 +1,27 @@
 ﻿using System;
 using System.IO;
 using UnityEditor;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 namespace Overmind.Solitaire.UnityClient.Editor
 {
 	public static class AssetBundleBuilder
 	{
-		[MenuItem("Development/Build AssetBundles for Windows")]
-		internal static void BuildAllAssetBundlesForWindows()
+		public static void BuildAllAssetBundles(string platform, string assetBundleDirectory)
 		{
-			BuildAllAssetBundles("Windows", Path.Combine("AssetBundles", "Windows"));
-		}
+			UnityEngine.Debug.LogFormat("[AssetBundleBuilder] Building asset bundles for platform '{0}'", platform);
+			UnityEngine.Debug.LogFormat("[AssetBundleBuilder] Writing to '{0}'", assetBundleDirectory);
 
-		public static void BuildAllAssetBundles(string platform, string outputPath)
-		{
 			BuildTarget unityPlatform = ConvertPlatform(platform);
 			BuildAssetBundleOptions options = BuildAssetBundleOptions.StrictMode | BuildAssetBundleOptions.DeterministicAssetBundle;
 
-			Directory.CreateDirectory(outputPath);
-			AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(outputPath, options, unityPlatform);
+			Directory.CreateDirectory(assetBundleDirectory);
+			AssetBundleManifest manifest = BuildPipeline.BuildAssetBundles(assetBundleDirectory, options, unityPlatform);
+			BuildResult result = manifest != null ? BuildResult.Succeeded : BuildResult.Failed;
 			AssetDatabase.Refresh();
+
+			UnityEngine.Debug.LogFormat("[PackageBuilder] Build completed with status '{0}'", result);
 
 			if (manifest == null)
 				throw new Exception("Build failed");
