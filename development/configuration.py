@@ -114,3 +114,17 @@ def get_unity_version(unity_project_path):
 		version_text = version_file.read()
 
 	return re.search(r"^m_EditorVersion: (?P<version>[0-9a-z\.]*)$", version_text, flags = re.MULTILINE).group("version")
+
+
+def convert_to_unity_platform(platform):
+	if platform is None:
+		return None
+
+	if platform == "Android":
+		return "Android"
+	if platform == "Linux":
+		return "Linux64"
+	if platform == "Windows":
+		return "Win64"
+
+	raise ValueError("Unsupported platform: '%s'" % platform)

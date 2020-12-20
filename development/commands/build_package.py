@@ -1,6 +1,7 @@
 import logging
 import os
 
+import development.configuration
 import development.commands.editor
 
 
@@ -28,6 +29,8 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 def build_package(unity_executable, unity_project_path, platform, configuration, asset_bundle_directory, package_directory, simulate): # pylint: disable = too-many-arguments
 	logger.info("Building package for platform '%s' with configuration '%s'", platform, configuration)
 
+	unity_platform = development.configuration.convert_to_unity_platform(platform)
+
 	command_arguments = {
 		"platform": platform,
 		"configuration": configuration,
@@ -35,4 +38,5 @@ def build_package(unity_executable, unity_project_path, platform, configuration,
 		"packageDirectory": os.path.abspath(package_directory),
 	}
 
-	development.commands.editor.run_editor_command(unity_executable, unity_project_path, "BuildPackage", command_arguments, simulate = simulate)
+	development.commands.editor.run_editor_command(
+		unity_executable, unity_project_path, "BuildPackage", command_arguments, target_platform = unity_platform, simulate = simulate)

@@ -1,6 +1,7 @@
 import logging
 import os
 
+import development.configuration
 import development.commands.editor
 
 
@@ -25,9 +26,12 @@ def run(environment, configuration, arguments): # pylint: disable = unused-argum
 def build_asset_bundles(unity_executable, unity_project_path, platform, asset_bundle_directory, simulate): # pylint: disable = too-many-arguments
 	logger.info("Building asset bundles for platform '%s'", platform)
 
+	unity_platform = development.configuration.convert_to_unity_platform(platform)
+
 	command_arguments = {
 		"platform": platform,
 		"assetBundleDirectory": os.path.abspath(asset_bundle_directory),
 	}
 
-	development.commands.editor.run_editor_command(unity_executable, unity_project_path, "BuildAssetBundles", command_arguments, simulate = simulate)
+	development.commands.editor.run_editor_command(
+		unity_executable, unity_project_path, "BuildAssetBundles", command_arguments, target_platform = unity_platform, simulate = simulate)

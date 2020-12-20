@@ -53,9 +53,16 @@ def launch_editor(unity_executable, unity_project_path, simulate):
 		subprocess.Popen(unity_command)
 
 
-def run_editor_command(unity_executable, unity_project_path, command, command_arguments, simulate):
+def run_editor_command( # pylint: disable = too-many-arguments
+		unity_executable, unity_project_path, command, command_arguments,
+		target_platform = None, batch_mode = True, enable_graphics = False, quit_on_completion = True, simulate = False):
+
 	unity_command = [ unity_executable, "-projectPath", unity_project_path ]
-	unity_command += [ "-batchMode", "-noGraphics", "-quit", "-logFile", "-" ]
+	unity_command += [ "-batchMode" ] if batch_mode else []
+	unity_command += [ "-noGraphics" ] if not enable_graphics else []
+	unity_command += [ "-quit" ] if quit_on_completion else []
+	unity_command += [ "-buildTarget", target_platform ] if target_platform is not None else []
+	unity_command += [ "-logFile", "-" ]
 
 	if command:
 		unity_command += [ "-executeMethod", "Overmind.Solitaire.UnityClient.Editor.EditorCommand." + command ]
