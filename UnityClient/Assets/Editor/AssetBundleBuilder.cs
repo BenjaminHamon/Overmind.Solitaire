@@ -7,12 +7,6 @@ namespace Overmind.Solitaire.UnityClient.Editor
 {
 	public static class AssetBundleBuilder
 	{
-		[MenuItem("Development/Build AssetBundles for Windows")]
-		internal static void BuildAllAssetBundlesForWindows()
-		{
-			BuildAllAssetBundles("Windows", Path.Combine("AssetBundles", "Windows"));
-		}
-
 		public static void BuildAllAssetBundles(string platform, string outputPath)
 		{
 			BuildTarget unityPlatform = ConvertPlatform(platform);
