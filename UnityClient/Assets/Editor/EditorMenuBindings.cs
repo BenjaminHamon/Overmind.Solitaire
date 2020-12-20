@@ -32,7 +32,7 @@ namespace Overmind.Solitaire.UnityClient.Editor
 		{
 			string assetBundleDirectory = Path.Combine("..", "Artifacts", "AssetBundles", "Android");
 			string packageDirectory = Path.Combine("..", "Artifacts", "Packages", "Android", "Debug");
-			PackageBuilder.GeneratePackage("Android", "Debug", assetBundleDirectory, packageDirectory);
+			PackageBuilder.BuildPackage("Android", "Debug", assetBundleDirectory, packageDirectory);
 			Process.Start(packageDirectory);
 		}
 
@@ -41,7 +41,7 @@ namespace Overmind.Solitaire.UnityClient.Editor
 		{
 			string assetBundleDirectory = Path.Combine("..", "Artifacts", "AssetBundles", "Android");
 			string packageDirectory = Path.Combine("..", "Artifacts", "Packages", "Android", "Release");
-			PackageBuilder.GeneratePackage("Android", "Release", assetBundleDirectory, packageDirectory);
+			PackageBuilder.BuildPackage("Android", "Release", assetBundleDirectory, packageDirectory);
 			Process.Start(packageDirectory);
 		}
 
@@ -50,7 +50,7 @@ namespace Overmind.Solitaire.UnityClient.Editor
 		{
 			string assetBundleDirectory = Path.Combine("..", "Artifacts", "AssetBundles", "Linux");
 			string packageDirectory = Path.Combine("..", "Artifacts", "Packages", "Linux", "Debug");
-			PackageBuilder.GeneratePackage("Linux", "Debug", assetBundleDirectory, packageDirectory);
+			PackageBuilder.BuildPackage("Linux", "Debug", assetBundleDirectory, packageDirectory);
 			Process.Start(packageDirectory);
 		}
 
@@ -59,7 +59,7 @@ namespace Overmind.Solitaire.UnityClient.Editor
 		{
 			string assetBundleDirectory = Path.Combine("..", "Artifacts", "AssetBundles", "Linux");
 			string packageDirectory = Path.Combine("..", "Artifacts", "Packages", "Linux", "Release");
-			PackageBuilder.GeneratePackage("Linux", "Release", assetBundleDirectory, packageDirectory);
+			PackageBuilder.BuildPackage("Linux", "Release", assetBundleDirectory, packageDirectory);
 			Process.Start(packageDirectory);
 		}
 
@@ -68,7 +68,7 @@ namespace Overmind.Solitaire.UnityClient.Editor
 		{
 			string assetBundleDirectory = Path.Combine("..", "Artifacts", "AssetBundles", "Windows");
 			string packageDirectory = Path.Combine("..", "Artifacts", "Packages", "Windows", "Debug");
-			PackageBuilder.GeneratePackage("Windows", "Debug", assetBundleDirectory, packageDirectory);
+			PackageBuilder.BuildPackage("Windows", "Debug", assetBundleDirectory, packageDirectory);
 			Process.Start(packageDirectory);
 		}
 
@@ -77,7 +77,7 @@ namespace Overmind.Solitaire.UnityClient.Editor
 		{
 			string assetBundleDirectory = Path.Combine("..", "Artifacts", "AssetBundles", "Windows");
 			string packageDirectory = Path.Combine("..", "Artifacts", "Packages", "Windows", "Release");
-			PackageBuilder.GeneratePackage("Windows", "Release", assetBundleDirectory, packageDirectory);
+			PackageBuilder.BuildPackage("Windows", "Release", assetBundleDirectory, packageDirectory);
 			Process.Start(packageDirectory);
 		}
 	}

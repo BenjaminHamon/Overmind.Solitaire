@@ -10,21 +10,10 @@ namespace Overmind.Solitaire.UnityClient.Editor
 {
 	public static class PackageBuilder
 	{
-		public static void GeneratePackage()
+		public static void BuildPackage(string platform, string configuration, string assetBundleDirectory, string packageDirectory)
 		{
-			Dictionary<string, string> arguments = EditorCommandHelpers.FindMethodArguments();
-			string platform = EditorCommandHelpers.ParseArgument<string>(arguments, "platform");
-			string configuration = EditorCommandHelpers.ParseArgument<string>(arguments, "configuration");
-			string assetBundleDirectory = EditorCommandHelpers.ParseArgument<string>(arguments, "assetBundleDirectory");
-			string packageDirectory = EditorCommandHelpers.ParseArgument<string>(arguments, "packageDirectory");
-
-			GeneratePackage(platform, configuration, assetBundleDirectory, packageDirectory);
-		}
-
-		public static void GeneratePackage(string platform, string configuration, string assetBundleDirectory, string packageDirectory)
-		{
-			UnityEngine.Debug.LogFormat("[PackageBuilder] Packaging for platform '{0}' with configuration '{1}'", platform, configuration);
-			UnityEngine.Debug.LogFormat("[PackageBuilder] Writing package to '{0}'", packageDirectory);
+			UnityEngine.Debug.LogFormat("[PackageBuilder] Building package for platform '{0}' with configuration '{1}'", platform, configuration);
+			UnityEngine.Debug.LogFormat("[PackageBuilder] Writing to '{0}'", packageDirectory);
 
 			BuildTarget unityPlatform = ConvertPlatform(platform);
 			BuildOptions options = GetOptions(configuration);

@@ -15,6 +15,7 @@ information_messages = [
 	re.compile(r"^Complete build size "),
 	re.compile(r"^Exiting batchmode "),
 	re.compile(r"^\[ScriptCompilation\]"),
+	re.compile(r"^\[AssetBundleBuilder\]"),
 	re.compile(r"^\[PackageBuilder\]"),
 	re.compile(r"^Exiting "),
 ]
