@@ -21,7 +21,7 @@ namespace Overmind.Solitaire.UnityClient.Editor
 			BuildResult result = manifest != null ? BuildResult.Succeeded : BuildResult.Failed;
 			AssetDatabase.Refresh();
 
-			UnityEngine.Debug.LogFormat("[PackageBuilder] Build completed with status '{0}'", result);
+			UnityEngine.Debug.LogFormat("[AssetBundleBuilder] Build completed with status '{0}'", result);
 
 			if (manifest == null)
 				throw new Exception("Build failed");
