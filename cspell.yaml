@@ -1,0 +1,26 @@
+# cspell:words pycache venv
+
+files:
+  - "**/*.cs"
+  - "**/*.json"
+  - "**/*.md"
+  - "**/*.py"
+  - "**/*.txt"
+  - "**/*.yaml"
+
+ignorePaths:
+  - "__pycache__/"
+  - ".venv/"
+  - "*.egg-info/"
+  - "/Artifacts/"
+  - "/Automation/Scripts/build/"
+  - "/Automation/Scripts/dist/"
+  - "/UnityClient/Library/"
+  - "/UnityClient/Logs/"
+  - "/UnityClient/obj/"
+  - "/UnityClient/Temp/"
+
+words:
+  - benjaminhamon
+  - bhamon
+  - hamon
