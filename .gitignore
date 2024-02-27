@@ -18,6 +18,7 @@ __pycache__/
 /UnityClient/Logs/
 /UnityClient/obj/
 /UnityClient/Temp/
+/UnityClient/UserSettings/
 /UnityClient/*.csproj
 /UnityClient/*.sln
 

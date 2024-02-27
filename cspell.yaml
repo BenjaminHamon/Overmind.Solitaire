@@ -19,6 +19,7 @@ ignorePaths:
   - "/UnityClient/Logs/"
   - "/UnityClient/obj/"
   - "/UnityClient/Temp/"
+  - "/UnityClient/UserSettings/"
 
 words:
   - benjaminhamon
