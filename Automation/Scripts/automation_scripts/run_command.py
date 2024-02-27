@@ -7,6 +7,7 @@ from bhamon_development_toolkit.asyncio_extensions.asyncio_context import Asynci
 from bhamon_development_toolkit.automation.automation_command import AutomationCommand
 
 from automation_scripts.configuration import configuration_manager
+from automation_scripts.configuration.project_environment import ProjectEnvironment
 from automation_scripts.helpers import automation_helpers
 
 
@@ -15,6 +16,7 @@ logger = logging.getLogger("Main")
 
 def main():
     with automation_helpers.execute_in_workspace(__file__):
+        environment = ProjectEnvironment()
         configuration = configuration_manager.load_configuration()
         command_collection = list_commands()
 
@@ -25,10 +27,10 @@ def main():
         automation_helpers.configure_logging(arguments)
 
         automation_helpers.log_script_information(configuration, arguments.simulate)
-        command_instance.check_requirements(arguments, configuration = configuration)
+        command_instance.check_requirements(arguments, environment = environment, configuration = configuration)
 
         asyncio_context = AsyncioContext()
-        asyncio_context.run(command_instance.run_async(arguments, configuration = configuration, simulate = arguments.simulate))
+        asyncio_context.run(command_instance.run_async(arguments, environment = environment, configuration = configuration, simulate = arguments.simulate))
 
 
 def create_argument_parser(command_collection: List[str]) -> argparse.ArgumentParser:
@@ -48,6 +50,7 @@ def create_argument_parser(command_collection: List[str]) -> argparse.ArgumentPa
 def list_commands() -> List[str]:
     return [
         "automation_scripts.commands.clean.CleanCommand",
+        "automation_scripts.commands.editor.EditorCommand",
         "automation_scripts.commands.info.InfoCommand",
     ]
 
