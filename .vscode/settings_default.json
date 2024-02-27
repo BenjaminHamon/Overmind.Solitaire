@@ -1,0 +1,11 @@
+{
+	"$schema": "./schema.json",
+
+	"python.defaultInterpreterPath": "${workspaceFolder}/.venv/scripts/python",
+
+	"python.analysis.extraPaths": [ "./Automation/Setup" ],
+	"python.analysis.typeCheckingMode": "basic",
+
+	"python.testing.pytestEnabled": true,
+	"python.testing.pytestArgs": [ "Automation/Tests" ],
+}
