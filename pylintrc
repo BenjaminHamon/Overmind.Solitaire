@@ -1,14 +1,19 @@
 [BASIC]
 const-naming-style = snake_case
 
+[DESIGN]
+max-attributes = 10
+
 [FORMAT]
-indent-string = '\t'
-max-line-length = 200
+indent-string = '    '
+max-line-length = 160
 
 [MESSAGES CONTROL]
 disable =
-	bad-continuation,
-	bad-whitespace,
+	consider-using-f-string,
 	duplicate-code,
-	len-as-condition,
 	missing-docstring,
+	too-few-public-methods,
+
+[REPORTS]
+score = no

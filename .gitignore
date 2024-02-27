@@ -1,14 +1,17 @@
 # Artifacts
 /Artifacts/
+/Automation/Scripts/build/
+/Automation/Scripts/dist/
 
 # Environment
-environment.json
+/environment.json
 
 # Log files
 *.log
 
 # Python
 __pycache__/
+*.egg-info/
 
 # Python virtual environment
 .venv/
