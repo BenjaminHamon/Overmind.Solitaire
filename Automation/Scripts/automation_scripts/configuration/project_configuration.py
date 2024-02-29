@@ -49,5 +49,6 @@ class ProjectConfiguration:
         return [
             UnityProject(
                 path = "UnityClient",
+                command_namespace = "Overmind.Solitaire.UnityClient.Editor.EditorCommand",
             )
         ]
