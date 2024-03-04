@@ -13,6 +13,24 @@ class UnityAutomationClient:
         self._command_namespace = command_namespace
 
 
+    async def build_application_package(self, # pylint: disable = too-many-arguments
+            platform: str, configuration: str, asset_bundle_directory: str, package_directory: str,
+            log_file_path: Optional[str] = None, simulate: bool = False) -> None:
+
+        command = "BuildPackage"
+
+        command_arguments = {
+            "platform": platform,
+            "configuration": configuration,
+            "assetBundleDirectory": os.path.abspath(asset_bundle_directory),
+            "packageDirectory": os.path.abspath(package_directory),
+        }
+
+        build_target = self._convert_platform_to_unity_build_target(platform)
+
+        await self.run_command(command, command_arguments, build_target, log_file_path = log_file_path, simulate = simulate)
+
+
     async def build_asset_bundles(self,
             platform: str, asset_bundle_directory: str,
             log_file_path: Optional[str] = None, simulate: bool = False) -> None:
